@@ -400,7 +400,7 @@ am__DIST_COMMON = $(dist_man_MANS) $(srcdir)/Makefile.in \
 	$(srcdir)/librsvg.pc.in \
 	$(top_srcdir)/build/Makefile.msvc-introspection \
 	$(top_srcdir)/build/Makefile.msvcproj AUTHORS COPYING \
-	LICENCE LICENCE-LIB ChangeLog INSTALL NEWS README compile config.guess \
+	LICENCE LICENCE-LIB ChangeLog INSTALL NEWS README.md compile config.guess \
 	config.sub depcomp install-sh ltmain.sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
@@ -774,7 +774,7 @@ rsvg_view_3_LDADD = \
 	$(GTHREAD_LIBS)		\
 	$(LIBM)
 
-EXTRA_DIST = librsvg.doap AUTHORS NEWS LICENCE LICENCE-LIB librsvg-zip.in \
+EXTRA_DIST = librsvg.doap AUTHORS README.md NEWS LICENCE LICENCE-LIB librsvg-zip.in \
 	Rsvg-2.0-custom.vala Rsvg-2.0.metadata \
 	config.h.win32.in config.h.win32 rsvg.symbols glib-tap.mk \
 	tap-driver.sh tap-test css/README examples/README \
@@ -792,6 +792,8 @@ dist-hook:
 	      $(distdir)/AGENTS_deprecated-abi.md $(distdir)/PLAN.md
 	rm -rf $(distdir)/debug
 	-find $(distdir) \( -name '*.log' -o -name '*.trs' \) -delete
+	rm -f $(distdir)/README
+	test -f $(distdir)/README.md
 CLEANFILES = $(enum_sources) s-enum-types-h s-enum-types-c \
 	$(am__append_3) $(am__append_4)
 pkgconfigdir = $(libdir)/pkgconfig

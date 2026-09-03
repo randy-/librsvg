@@ -74,6 +74,11 @@ if find "$stage/$name/tests" \( -name '*.log' -o -name '*.trs' \) | grep -q .; t
 	echo "$0: test logs leaked into the staging tree" >&2
 	exit 1
 fi
+rm -f "$stage/$name/README"
+if [ ! -f "$stage/$name/README.md" ]; then
+	echo "$0: README.md missing from the staging tree" >&2
+	exit 1
+fi
 
 tar -C "$stage" -cJf "$out" "$name"
 

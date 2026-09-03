@@ -213,6 +213,7 @@ endif # OS_WIN32
 EXTRA_DIST =				\
 	librsvg.doap			\
 	AUTHORS				\
+	README.md			\
 	NEWS				\
 	LICENCE				\
 	LICENCE-LIB			\
@@ -254,6 +255,8 @@ dist-hook:
 	      $(distdir)/AGENTS_deprecated-abi.md $(distdir)/PLAN.md
 	rm -rf $(distdir)/debug
 	-find $(distdir) \( -name '*.log' -o -name '*.trs' \) -delete
+	rm -f $(distdir)/README
+	test -f $(distdir)/README.md
 
 CLEANFILES = \
 	$(enum_sources) \
