@@ -1,0 +1,24 @@
+# P20 same-renderer subset: class A named text fixtures.
+# Paths relative to tests/fixtures/parity/.
+# rust 2.62.3 PNGs stay the oracle; these get host-local refs.
+a-pseudo-class.svg
+font-shorthand.svg
+rtl-tspan.svg
+include-text.svg
+include-fallback.svg
+filter-component-transfer-from-reference-page.svg
+text-objectBoundingBox.svg
+svg2/text-paint-order.svg
+bugs/a-inside-text-content-738.svg
+bugs/a-inside-text-content-pseudo-class-738.svg
+bugs/bug108-font-size-relative.svg
+bugs/bug340047.svg
+bugs/bug363-missing-space.svg
+bugs/bug481-tspan-uses-at-least-first-x.svg
+bugs/bug494-text-accumulate-dy.svg
+bugs/bug587721-text-transform.svg
+bugs/bug642-nested-tspan-dx-dy.svg
+bugs/bug667-tspan-visibility.svg
+bugs/bug668-small-caps.svg
+bugs/bug730-font-scaling.svg
+bugs/bug760180.svg

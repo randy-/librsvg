@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20">
+  <g transform="translate(0,0) scale(10,10)">
+    <path d="M 0.5 1 L 1.5 1" fill="none" stroke="#ff0000" stroke-width="1"
+          vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>

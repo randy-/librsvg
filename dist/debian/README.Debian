@@ -1,0 +1,46 @@
+librsvg-c for Debian/Devuan
+===========================
+
+This source package is named **librsvg-c** so it does not collide with
+GNOME/Rust **librsvg2** in the archive namespace.
+
+The binaries displace/replaces the official librsvg2-* packages on the system.
+They keep the same C API and SONAME **librsvg-2.so.2**:
+
+  librsvg-c2        Conflicts/Replaces/Provides  librsvg2-2
+  librsvg-c-common  Conflicts/Replaces/Provides  librsvg2-common
+  librsvg-c-dev     Conflicts/Replaces/Provides  librsvg2-dev
+  librsvg-c-bin     Conflicts/Replaces/Provides  librsvg2-bin
+
+gir1.2-rsvg-2.0 is not shipped (introspection is disabled).
+
+css/ is the only CSS engine. libcroco is not built or packaged.
+
+`librsvg-c2` Depends on **libgif7** (GIF in SVG `<image>`).
+
+After installing librsvg-c-common, postinst refreshes gdk-pixbuf
+loaders.cache. After removal, postrm does the same so the SVG loader
+is unregistered. The loader file is `libpixbufloader-svg.so` (hyphen).
+
+Install (desktop)
+-----------------
+
+Install **all needed local debs in one apt transaction**:
+
+    apt-get install -y ./librsvg-c2_*.deb ./librsvg-c-common_*.deb \
+      ./librsvg-c-bin_*.deb ./librsvg-c-dev_*.deb
+
+`c2` + `common` is the desktop atomic pair. `-dev` is optional.
+Never `dpkg -i librsvg-c2` alone while GNOME librsvg2-common is
+installed. Never `apt-get -f` after a failed replace of librsvg2-*:
+apt will remove the half-unpacked C packages and can drop
+desktop-base / icon themes.
+
+Full guide: `deb/INSTALL.md` in the source tree (copied next to the
+.debs as INSTALL.md when you run `make deb`).
+
+Verify:
+
+    dpkg -l | grep librsvg
+    rsvg-convert --version
+    gdk-pixbuf-query-loaders | grep svg

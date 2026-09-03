@@ -1,0 +1,29 @@
+Release
+=======
+
+From the project root (`make help` lists targets):
+
+    make pkg
+
+writes **only** `librsvg-c-2.62.3.tar.xz` under `../pkg/`.
+The tarball is source only;
+packaging lives in git `dist/`, not in the public archive.
+`rust/` is not included. `debug/` and test logs (`tests/*.log`,
+`tests/*.trs`) are not part of the release tarball.
+`make dist-release` is an alias of `pkg`.
+
+    make crux
+
+writes `../pkg/Pkgfile` next to that tarball. It does not run
+`pkgmk` and does not install onto the host.
+
+    make deb
+
+builds Debian binary packages into `../debpkg/` via DESTDIR
+(`debian/tmp`). It does not `dpkg -i` or `make install` onto
+the live prefix.
+
+    cd ../pkg
+    gpg --detach-sign --armor librsvg-c-2.62.3.tar.xz
+    sha256sum librsvg-c-2.62.3.tar.xz > SHA256SUMS
+    gpg --detach-sign --armor SHA256SUMS

@@ -1,0 +1,67 @@
+/*
+   rsvg-features.h: Feature-test macros for librsvg.
+
+   Copyright (C) 2026 Randy Butler
+
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Library General Public License as
+   published by the Free Software Foundation; either version 2 of the
+   License, or (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Library General Public License for more details.
+
+   You should have received a copy of the GNU Library General Public
+   License along with this program; if not, write to the
+   Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+   Boston, MA 02111-1307, USA.
+*/
+
+#if !defined (__RSVG_RSVG_H_INSIDE__) && !defined (RSVG_COMPILATION)
+#warning "Including <librsvg/rsvg-features.h> directly is deprecated."
+#endif
+
+#ifndef RSVG_FEATURES_H
+#define RSVG_FEATURES_H
+
+#define LIBRSVG_CHECK_VERSION(major,minor,micro) \
+  (LIBRSVG_MAJOR_VERSION > (major) || \
+   (LIBRSVG_MAJOR_VERSION == (major) && LIBRSVG_MINOR_VERSION > (minor)) || \
+   (LIBRSVG_MAJOR_VERSION == (major) && LIBRSVG_MINOR_VERSION == (minor) && LIBRSVG_MICRO_VERSION >= (micro)))
+
+#define LIBRSVG_HAVE_SVGZ   (TRUE)
+#define LIBRSVG_HAVE_CSS    (TRUE)
+#define LIBRSVG_HAVE_PIXBUF (TRUE)
+
+#define LIBRSVG_CHECK_FEATURE(FEATURE) (LIBRSVG_HAVE_##FEATURE)
+
+#ifndef RSVG_VAR
+# ifdef G_PLATFORM_WIN32
+#  ifndef RSVG_STATIC
+#   ifdef RSVG_COMPILATION
+#    define RSVG_VAR extern __declspec (dllexport)
+#   else
+#    define RSVG_VAR extern __declspec (dllimport)
+#   endif
+#  else
+#   define RSVG_VAR extern
+#  endif
+# else
+#  define RSVG_VAR extern
+# endif
+#endif
+
+/* Runtime version, 2.52 names. */
+RSVG_VAR const guint rsvg_major_version;
+RSVG_VAR const guint rsvg_minor_version;
+RSVG_VAR const guint rsvg_micro_version;
+
+/* 2.40 names, kept for existing callers. */
+RSVG_VAR const guint librsvg_major_version;
+RSVG_VAR const guint librsvg_minor_version;
+RSVG_VAR const guint librsvg_micro_version;
+RSVG_VAR const char librsvg_version[];
+
+#endif

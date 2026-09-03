@@ -1,0 +1,7 @@
+This directory is a read-only copy of rust/rsvg/tests/fixtures/reftests
+from the official librsvg 2.62.3 snapshot (the rust/ tree).
+
+Do not edit these fixtures to match this renderer.  The living gap list
+is tests/parity-xfail.txt.  See tests/README-parity.md.
+
+Source: rust/rsvg/tests/fixtures/reftests (librsvg 2.62.3).

@@ -1,0 +1,66 @@
+# rsync excludes for make-dist-release.sh (public source tarball).
+# rsync does not read .gitignore; this file is the pack list.
+# Keep /debug/, *.log, and *.trs here even if .gitignore also has them.
+#
+# /build/ is gitignored but MUST ship (Makefile.in, win32). Do not
+# add /build/. /build-*/ is a leftover configure dir and is excluded.
+
+/.git/
+/.gitignore
+.gitignore
+/dist/
+/debian
+/debian/
+/debpkg/
+/pkg/
+/tmp/
+/.downloads/
+/stage/
+/rust/
+/debug/
+/build-*/
+/tests/fuzz/out/
+
+autom4te.cache/
+.libs/
+.deps/
+
+*.log
+*.trs
+*.o
+*.lo
+*.la
+*.so
+*.so.*
+*.a
+*.deb
+*.changes
+*.buildinfo
+*.dsc
+*.asc
+*~
+
+config.log
+config.status
+libtool
+Makefile
+config.h
+stamp-h1
+s-enum-types-h
+s-enum-types-c
+rsvg-features.h
+rsvg-version.h
+librsvg-2.0.pc
+librsvg-2.0-uninstalled.pc
+rsvg-convert
+rsvg-view-3
+rsvg-loader
+gdk-pixbuf.loaders
+grok-start
+
+AGENTS.md
+AGENTS_history.md
+AGENTS_deprecated-abi.md
+PLAN.md
+oss-familybusinesssoftware.com-pubkey.asc
+oss-pubkey.asc

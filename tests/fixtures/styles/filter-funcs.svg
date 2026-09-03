@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+  <defs>
+    <filter id="fblur"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+  <rect id="blur" x="0" y="0" width="1" height="1" fill="lime" filter="blur(5)"/>
+  <rect id="drop" x="0" y="0" width="1" height="1" fill="lime" filter="drop-shadow(#ff0000 1px 4px 6px)"/>
+  <rect id="bright" x="0" y="0" width="1" height="1" fill="lime" filter="brightness(125%)"/>
+  <rect id="urls" x="0" y="0" width="1" height="1" fill="lime" filter="url(#fblur) url(#fblur)"/>
+  <rect id="none" x="0" y="0" width="1" height="1" fill="lime" filter="none"/>
+</svg>

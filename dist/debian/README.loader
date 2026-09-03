@@ -1,0 +1,104 @@
+gdk-pixbuf SVG loader audit vs GNOME librsvg 2.62.3
+====================================================
+
+Scope: `gdk-pixbuf-loader/io-svg.c`, `librsvg.thumbnailer.in`,
+`librsvg-c-common` install/postinst/postrm. Oracle: `rust/gdk-pixbuf-loader/`
+(`src/lib.rs` is the 2.62.3 meson loader; `io-svg.c` there is a C twin).
+No host install. LIBRSVG_VERSION unchanged.
+
+Sources
+-------
+
+| Piece | Location |
+| ----- | -------- |
+| Loader | `gdk-pixbuf-loader/io-svg.c` (`fill_info`, `fill_vtable`) |
+| Thumbnailer | `gdk-pixbuf-loader/librsvg.thumbnailer.in` |
+| .so | `libpixbufloader-svg.so` via `gdk-pixbuf-loader/Makefile.am` |
+| Debian | `dist/debian/librsvg-c-common.install`, `.postinst`, `.postrm` |
+
+Entry points (pass)
+-------------------
+
+Both expose `fill_vtable` / `fill_info` only. Vtable is
+`begin_load` / `load_increment` / `stop_load`. No `load`, no
+`load_animation`.
+
+| Item | This tree | rust 2.62.3 `lib.rs` | Result |
+| ---- | --------- | -------------------- | ------ |
+| Format name | `svg` | `svg` | pass |
+| MIME | `image/svg+xml`, `image/svg`, `image/svg-xml`, `image/vnd.adobe.svg+xml`, `text/xml-svg`, `image/svg+xml-compressed` | same | pass |
+| Extensions | `svg`, `svgz`, `svg.gz` | same | pass |
+| Magic | `" <svg"` / `" <!DOCTYPE svg"` mask `*` + spaces, relevance 100 | same | pass |
+| Flags | `SCALABLE \| THREADSAFE` | same | pass |
+| License string | `LGPL` | `LGPL` | pass |
+| Animation | none (static pixbuf) | none | pass |
+| Size query | `rsvg_handle_set_size_callback` with GdkPixbuf `size_func` | same, after stream parse | pass (timing differs; see gaps) |
+| Incremental | `rsvg_handle_write` per chunk | buffer in `MemoryInputStream`, parse in `stop_load` | pass for MIME; see gaps |
+| svgz | gzip magic in `rsvg_handle_write` | stream path in rust | pass |
+| DPI | loader does not call `rsvg_handle_set_dpi`; handle default | loader does not set DPI; rust default 96 | gap is library default, not MIME |
+| Thumbnailer MIME | `image/svg+xml;image/svg+xml-compressed;` | identical | pass |
+
+Error path: no `g_assert` / `abort` / `g_error` in `io-svg.c`. Failures
+return FALSE and set a `GError`. Soft-fail.
+
+Linking (pass)
+--------------
+
+`librsvg-c-common` `.so` (dpkg-deb extract, `readelf`/`nm -D`):
+
+- NEEDED: `librsvg-2.so.2`, `libgdk_pixbuf-2.0.so.0`, `libgobject-2.0.so.0`, `libglib-2.0.so.0`
+- No `libcroco` NEEDED (libcroco is discontinued; css/ only)
+- No Rust/C++ mangled symbols (`_ZN`, `rustc`, cargo)
+
+Debian package (pass)
+---------------------
+
+`.install` ships only `libpixbufloader-svg.so` and
+`librsvg.thumbnailer`. postinst/postrm refresh `loaders.cache` via
+`gdk-pixbuf-query-loaders --update-cache` and `dpkg-trigger`; they do
+not ship a cache file. Conflicts/Replaces/Provides `librsvg2-common`.
+
+Must-fix
+--------
+
+None for crash, abort, or wrong MIME.
+
+Should-fix (do not implement in this audit)
+-------------------------------------------
+
+1. **GError overwrite** in `rsvg_propagate_error`: `*err = NULL` then
+   `g_set_error` drops a previous error without `g_clear_error`.
+   rust `io-svg.c` calls `g_clear_error` after a failed
+   `rsvg_handle_write`. Leak, not abort.
+
+2. **`stop_load` if `handle` is NULL** (begin_load then stop with no
+   increment): returns FALSE without `g_free (context)`. Leak.
+
+3. **`rsvg_handle_close` result ignored.** rust C `io-svg.c` returns
+   FALSE if close fails. This copy continues to `get_pixbuf`.
+
+4. **`rsvg_handle_get_pixbuf` instead of `get_pixbuf_and_error`.**
+   rust 2.62.3 `lib.rs` uses the latter. Failed renders lose a
+   detailed `GError`.
+
+Ignore
+------
+
+- Default handle DPI is **96** (same as rust 2.62.3). Loader does not
+  set DPI. Not a loader MIME/crash bug.
+- Incremental XML parse vs rust buffer-then-`rsvg_handle_new_from_stream_sync`.
+  rust’s own `io-svg.c` still uses write/close like this copy.
+- Size callback installed on first write here; rust `lib.rs` sets it
+  after the stream is complete. GdkPixbuf still gets a scaled pixbuf
+  via the same callback.
+- No `GdkPixbufAnimation` (matches 2.62.3).
+- Deprecated `rsvg_handle_write` / `close` / `get_pixbuf` (2.62.3
+  rust loader uses the stream/pixbuf-and-error APIs).
+
+Verdict
+-------
+
+**Pass** for MIME, signatures, vtable, thumbnailer, linking (librsvg-2,
+css/ only, no libcroco, no Rust), and Debian `librsvg-c-common` contents.
+**No crash/abort/wrong-MIME must-fix.** Remaining items are error
+fidelity and small leaks in `io-svg.c`. Default handle DPI is 96.

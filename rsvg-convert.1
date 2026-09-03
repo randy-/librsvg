@@ -1,0 +1,111 @@
+.TH rsvg-convert 1
+.SH NAME
+rsvg-convert \- turn SVG files into raster images.
+.SH SYNOPSIS
+.B rsvg-convert
+[options] in.svg > out.png
+.I ""
+.SH DESCRIPTION
+Converts SVG images into PNG raster images, PDF, PS, or SVG vector images, or dumps of Cairo XML or recording surfaces.
+.SS OPTIONS
+.TP
+.I "\-d \-\-dpi-x number"
+Set the X resolution of the image in pixels per inch. RSVG's current default is 96dpi
+.TP
+.I "\-p \-\-dpi-y number"
+Set the Y resolution of the image in pixels per inch. RSVG's current default is 96dpi
+.TP
+.I "\-x \-\-x\-zoom number"
+X Zoom factor, as a percentage. If unspecified, 1.0 is used as the default.
+.TP
+.I "\-y \-\-y\-zoom number"
+Y Zoom factor, as a percentage. If unspecified, 1.0 is used as the default.
+.TP
+.I "\-z \-\-\-zoom number"
+Zoom factor, as a percentage. If unspecified, 1.0 is used as the default.
+.TP
+.I "\-w \-\-width length"
+Width of the rendered image. A bare number is pixels (PNG) or cairo user units (PDF/PS/EPS), same as before. With a unit (px, pt, pc, in, cm, mm) the length is resolved like GNOME rsvg-convert 2.62: PNG uses CSS pixels at the current DPI; PDF/PS/EPS convert to points (1in = 72pt; px uses DPI). Default is the natural width.
+.TP
+.I "\-h \-\-height length"
+Height of the rendered image. Same length forms as \-\-width. Default is the natural height.
+.TP
+.I "\-\-page\-width number"
+Width of the output page. Default is the rendered image width. Must be used together with \-\-page\-height. Pixel numbers only (optional px suffix). CSS lengths (mm, in) are not parsed on page flags.
+.TP
+.I "\-\-page\-height number"
+Height of the output page. Default is the rendered image height. Must be used together with \-\-page\-width.
+.TP
+.I "\-\-left number"
+Distance between the left edge of the page and the rendered image. Default is 0. Pixel numbers only. Negative values are allowed.
+.TP
+.I "\-\-top number"
+Distance between the top edge of the page and the rendered image. Default is 0.
+If the image plus this offset is larger than the page, the page does not grow; output is clipped.
+.TP
+.I "\-f \-\-format [png, pdf, pdf1.4, pdf1.5, pdf1.6, pdf1.7, ps, eps, svg, xml, recording]"
+Specify the output format. Default is PNG.
+.B pdf
+is unrestricted Cairo PDF.
+.B pdf1.4
+through
+.B pdf1.7
+call cairo_pdf_surface_restrict_to_version. xml and recording are kept.
+.TP
+.I "\-o \-\-output filename"
+Specify the output filename. If unspecified, outputs to stdout.
+.TP
+.I "\-s \-\-stylesheet filename.css"
+Apply a CSS stylesheet via rsvg_handle_set_stylesheet. Optional.
+.TP
+.I "\-l \-\-accept-language language-tags"
+Comma-separated BCP47 language tags (HTTP Accept-Language form), e.g. es-MX,de,en.
+Selects which \fIsystemLanguage\fP / <switch> child to draw. First matching child in document order wins.
+Without this option, the host locale (\fILANG\fP) is used. Invalid tags fail with a message and exit 1.
+Does not change the process locale.
+.TP
+.I FILE
+Input SVG. Omit the filename or use
+.B \-
+to read from stdin.
+.TP
+.I "\-a \-\-keep-aspect-ratio"
+Specify that the aspect ratio is to be preserved. If unspecified, aspect ratio will not be preserved.
+.TP
+.I "\-b \-\-background-color [black, white, #abccee, #aaa...]"
+Specify the background color. If unspecified, none is used as the default.
+.TP
+.I "\-\-base-uri uri"
+Specify the base URI for SVG files. If unspecified, none is used as the default.
+.TP
+.I "\-v \-\-version"
+Display the version and a short GNU GPL-2.0-only notice
+(Copyright (C) 1999-2026 The librsvg C library authors).
+This program is GNU GPL v2 per LICENCE / COPYING. The library is GNU Library GPL v2 or later per LICENCE-LIB.
+.TP
+.I "\-\-help"
+Display a summary of options, followed by the same short GPL-2 notice.
+There is no
+.B \-\-completion
+flag; bash Tab completion is a file installed with the bin package as
+.B /usr/share/bash-completion/completions/rsvg-convert
+.
+.P
+If no input filename is given, or the filename is
+.BR - ,
+SVG is read from standard input.  When standard input is a terminal,
+a short licence notice and
+.B Reading from standard input
+/ Control-C warning are printed on stderr before waiting for input.
+A pipe or redirected file does not print that warning.
+.TP
+.I FILE
+Input SVG. Omit the filename or use
+.B \-
+to read from stdin.
+.SH MORE INFORMATION
+http://librsvg.sourceforge.net/
+http://www.w3.org/TR/SVG11/
+http://www.gnome.org/
+.SH "AUTHORS"
+Dom Lachowicz (cinamod@hotmail.com), Caleb Moore (c.moore@student.unsw.edu.au), and a host of others.

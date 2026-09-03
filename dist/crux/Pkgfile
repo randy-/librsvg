@@ -1,0 +1,38 @@
+# Description: SVG rendering C library (librsvg-2.0)
+# URL:         https://familybusinesssoftware.com/oss/librsvg
+# Maintainer:  Randy Butler <oss@familybusinesssoftware.com>
+# Depends on:  cairo gdk-pixbuf glib libxml2 pango giflib libjpeg libpng libwebp
+# Optional:    libavif
+
+name=librsvg
+version=2.62.3
+release=1
+source=(https://familybusinesssoftware.com/oss/librsvg/download/librsvg-c-$version.tar.xz)
+
+build() {
+	cd librsvg-c-$version
+	./configure --prefix=/usr \
+		--disable-introspection \
+		--disable-vala
+	# This tree's Makefile can treat a bare `make` as dist-hook.
+	make all
+	make DESTDIR=$PKG install
+
+	# DESTDIR may write a staged loaders.cache for local testing.
+	# Do not ship it: gdk-pixbuf owns that path. After pkgadd run
+	# gdk-pixbuf-query-loaders --update-cache. First install is
+	# pkgadd without -u; -u only when upgrading.
+	find $PKG -name loaders.cache -delete
+
+	rm -rf $PKG/usr/share/gtk-doc
+	# Static API HTML only if present; never Doxygen inputs.
+	find $PKG -name Doxyfile -delete
+	find $PKG -path '*/doc/Makefile' -delete
+	find $PKG -path '*/doc/Makefile.in' -delete
+	find $PKG -path '*/doc/Makefile.am' -delete
+	find $PKG -name '*.la' -delete
+	find $PKG -name '*.a' -delete
+
+	install -D -m 644 dist/debian/rsvg-convert.bash-completion \
+	  $PKG/usr/share/bash-completion/completions/rsvg-convert
+}

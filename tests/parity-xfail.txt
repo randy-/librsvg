@@ -1,0 +1,232 @@
+# Accepted-difference list: default css/ engine vs librsvg 2.62.3
+# reftests. Not an open-bug list. Remaining rust-oracle misses are
+# tolerance classes (TFM font / TAA coverage AA / TCR cairo-vs-rust).
+# Per-fixture class + frozen T-norm: tests/parity-t-numbers.md
+# Policy: tests/README-parity.md
+#
+# Corpus: tests/fixtures/parity/  (copy of rust/rsvg/tests/fixtures/reftests)
+# Harness: tests/rsvg-test.c with RSVG_PARITY=1
+# Default matcher is css/. libcroco comparison: RSVG_CSS_ENGINE=croco
+# and tests/parity-xfail-croco.txt.
+#
+# Format:
+#   fail<TAB>path-relative-to-fixtures/parity/<TAB>reason
+#   skip<TAB>path<TAB>reason
+#
+# Counts (css/ default, after T6 text OBB):
+#   planned TAP tests: 750
+#   pass:  608
+#   fail:  115   (accepted differences; CI xfail)
+#   skip:  27    (no -ref.png: svg-to-svg, resources, helpers)
+#   TFM=73, TAA=37, TCR=5, E=0, named real-gap=0
+#
+# Q2: RSVG_PARITY=1 fills text as a cairo path in paint-order
+#   (rust drawing_ctx.rs). 105 unexpected_pass removed. rtl-tspan stays
+#   (Dana-FaNum). make check still uses show_layout (2.40 baseline).
+#
+# Q3: system-language-de.svg runs with LANG=de for that fixture only.
+# Q4: lighting default linearRGB unlinearizes on store (KUL
+#   2146/77 → 906/134, not flipped). mix-blend left cairo-vs-rust.
+# Q5: all 33 Adwaita xfails are coverage AA (0 opaque-vs-empty).
+#   No C. Leave xfail.
+# T5: font-size smaller/larger = parent/1.2 (2.62 font_props.rs).
+#   bugs/bug108-font-size-relative.svg flipped. rtl-tspan stays.
+# T6: text-objectBoundingBox.svg flipped. rust text.rs unions all
+#   span ink boxes for objectBoundingBox paint. Remaining named
+#   leftovers are Pango-vs-rust / Dana-FaNum / Verdana / cairo AA.
+# P19 harness: rust TTF set + fonts.conf; hint None/Off.
+#
+# P18 named real-gap empty. Still listed (not feature gaps):
+#   bugs/bug282-drop-shadow.svg → tiny-AA (3-box, max_diff=2)
+#   filter-effects-region.svg → tiny-AA (1px IRect leftovers)
+#   filter-image-from-reference-page.svg → interpolator (max_diff=2)
+#   filter-kernel-unit-length.svg → cairo vs rust PNG (KUL in)
+#   svg2/mix-blend-mode.svg → cairo vs rust PNG (HSL operators on)
+#
+# P17 recategorized (still listed): bugs/bug476507.svg → tiny-AA;
+#   filter-component-transfer-from-reference-page.svg → font/AA
+# P17: mix-blend HSL operators now used (cairo >= 1.10); still xfail
+#
+# P16 flipped: svg2/multi-filter.svg (hueRotate linearRGB float matrix)
+#
+# P15 recategorized (still listed; left the real-gap bucket):
+#   bugs/bug760180.svg, include-fallback.svg → font/AA
+#   bugs/bug603550-mask-luminance.svg → tiny-AA
+# P15 improved, not flipped: filter-effects-region 62×62 default
+#   (leftover 407); bugs/bug282-drop-shadow max_diff 5→2
+#
+# P10 flipped (pattern fill + fill-opacity):
+#   bugs/bug510-pattern-fill.svg
+#   bugs/bug510-pattern-fill-opacity.svg
+#
+# P9 flipped (path S/T reflection + coincident-marker tangents):
+#   bugs/bug761871-reset-reflection-points.svg
+#   bugs/bug763386-marker-coincident.svg
+#
+# P8 flipped (numeric/URI edge cases):
+#   bugs/bug165-zero-length-subpath-square-linecap.svg
+#   bugs/bug245-negative-dashoffset.svg
+#   bugs/bug548-data-url-without-mimetype.svg
+#   bugs/bug718-rect-negative-rx-ry.svg
+#
+# CSS matcher flips vs libcroco (removed from this list):
+#   bug483-attribute-selectors.svg
+#   bugs/bug112-svg-delayed-attributes.svg
+#   specificity.svg
+#   structural-pseudo-classes.svg
+#   xml-lang-css-inherit.svg
+#   xml-lang-css.svg
+#
+# Accepted differences by directory:
+#   (root): 5
+#   adwaita: 33
+#   bugs: 8
+#   svg1.1: 68
+#   svg2: 1
+#
+
+fail	adwaita/alarm-symbolic.svg	pixels=111 max_diff=21
+fail	adwaita/application-x-appliance-symbolic.svg	pixels=142 max_diff=13
+fail	adwaita/audio-card-symbolic.svg	pixels=95 max_diff=17
+fail	adwaita/audio-volume-overamplified-symbolic.svg	pixels=96 max_diff=3
+fail	adwaita/bluetooth-active-symbolic.svg	pixels=63 max_diff=8
+fail	adwaita/bluetooth-symbolic.svg	pixels=63 max_diff=8
+fail	adwaita/document-properties-symbolic.svg	pixels=80 max_diff=17
+fail	adwaita/edit-cut-symbolic.svg	pixels=68 max_diff=5
+fail	adwaita/edit-select-all-symbolic.svg	pixels=82 max_diff=3
+fail	adwaita/emoji-activities-symbolic.svg	pixels=9 max_diff=2
+fail	adwaita/find-location-symbolic.svg	pixels=90 max_diff=4
+fail	adwaita/focus-top-bar-symbolic.svg	pixels=23 max_diff=16
+fail	adwaita/folder-open-symbolic.svg	pixels=35 max_diff=9
+fail	adwaita/folder-remote-symbolic.svg	pixels=39 max_diff=10
+fail	adwaita/folder-symbolic.svg	pixels=36 max_diff=9
+fail	adwaita/go-home-symbolic.svg	pixels=62 max_diff=9
+fail	adwaita/input-mouse-symbolic.svg	pixels=31 max_diff=6
+fail	adwaita/input-tablet-symbolic.svg	pixels=96 max_diff=60
+fail	adwaita/insert-link-symbolic.svg	pixels=56 max_diff=17
+fail	adwaita/network-no-route-symbolic.svg	pixels=11 max_diff=2
+fail	adwaita/network-wired-acquiring-symbolic.svg	pixels=69 max_diff=10
+fail	adwaita/network-wired-no-route-symbolic.svg	pixels=73 max_diff=8
+fail	adwaita/object-select-symbolic.svg	pixels=8 max_diff=9
+fail	adwaita/orientation-portrait-inverse-symbolic.svg	pixels=20 max_diff=17
+fail	adwaita/orientation-portrait-symbolic.svg	pixels=19 max_diff=17
+fail	adwaita/rotation-allowed-symbolic.svg	pixels=70 max_diff=13
+fail	adwaita/rotation-locked-symbolic.svg	pixels=94 max_diff=19
+fail	adwaita/system-shutdown-symbolic.svg	pixels=59 max_diff=15
+fail	adwaita/tab-new-symbolic.svg	pixels=51 max_diff=9
+fail	adwaita/user-home-symbolic.svg	pixels=62 max_diff=9
+fail	adwaita/view-mirror-symbolic.svg	pixels=110 max_diff=5
+fail	adwaita/view-restore-symbolic.svg	pixels=64 max_diff=26
+fail	adwaita/weather-windy-symbolic.svg	pixels=76 max_diff=6
+fail	bugs/bug241-light-source-type.svg	pixels=1331 max_diff=7
+fail	bugs/bug282-drop-shadow.svg	pixels=118 max_diff=2
+fail	bugs/bug340047.svg	pixels=1490 max_diff=255
+fail	bugs/bug476507.svg	pixels=845 max_diff=56
+fail	bugs/bug587721-text-transform.svg	pixels=471 max_diff=255
+fail	bugs/bug590-mask-units.svg	pixels=55 max_diff=6
+fail	bugs/bug603550-mask-luminance.svg	pixels=2147 max_diff=254
+fail	bugs/bug730-font-scaling.svg	pixels=10646 max_diff=255
+fail	filter-component-transfer-from-reference-page.svg	pixels=5212 max_diff=255
+fail	filter-effects-region.svg	pixels=407 max_diff=255
+fail	filter-image-from-reference-page.svg	pixels=60306 max_diff=255
+fail	filter-kernel-unit-length.svg	pixels=906 max_diff=134
+fail	rtl-tspan.svg	pixels=4438 max_diff=255
+fail	svg1.1/coords-trans-02-t.svg	pixels=6589 max_diff=255
+fail	svg1.1/coords-trans-03-t.svg	pixels=5604 max_diff=255
+fail	svg1.1/coords-trans-04-t.svg	pixels=3911 max_diff=255
+fail	svg1.1/coords-trans-05-t.svg	pixels=7225 max_diff=255
+fail	svg1.1/coords-trans-06-t.svg	pixels=7958 max_diff=255
+fail	svg1.1/coords-trans-09-t.svg	pixels=16194 max_diff=255
+fail	svg1.1/coords-viewattr-02-b.svg	pixels=9728 max_diff=255
+fail	svg1.1/coords-viewattr-04-f.svg	pixels=18413 max_diff=255
+fail	svg1.1/filters-background-01-f.svg	pixels=17584 max_diff=255
+fail	svg1.1/filters-blend-01-b.svg	pixels=125472 max_diff=255
+fail	svg1.1/filters-color-01-b.svg	pixels=57608 max_diff=255
+fail	svg1.1/filters-color-02-b.svg	pixels=22046 max_diff=255
+fail	svg1.1/filters-composite-02-b.svg	pixels=35625 max_diff=255
+fail	svg1.1/filters-composite-03-f.svg	pixels=42053 max_diff=255
+fail	svg1.1/filters-composite-04-f.svg	pixels=41822 max_diff=255
+fail	svg1.1/filters-composite-05-f.svg	pixels=21091 max_diff=255
+fail	svg1.1/filters-comptran-01-b.svg	pixels=50548 max_diff=255
+fail	svg1.1/filters-conv-01-f.svg	pixels=22431 max_diff=255
+fail	svg1.1/filters-conv-02-f.svg	pixels=25103 max_diff=255
+fail	svg1.1/filters-conv-03-f.svg	pixels=15306 max_diff=255
+fail	svg1.1/filters-conv-04-f.svg	pixels=68367 max_diff=255
+fail	svg1.1/filters-diffuse-01-f.svg	pixels=22172 max_diff=255
+fail	svg1.1/filters-displace-02-f.svg	pixels=40352 max_diff=255
+fail	svg1.1/filters-felem-02-f.svg	pixels=5290 max_diff=255
+fail	svg1.1/filters-gauss-01-b.svg	pixels=23600 max_diff=255
+fail	svg1.1/filters-gauss-02-f.svg	pixels=14371 max_diff=255
+fail	svg1.1/filters-image-03-f.svg	pixels=18651 max_diff=255
+fail	svg1.1/filters-light-01-f.svg	pixels=35353 max_diff=255
+fail	svg1.1/filters-light-02-f.svg	pixels=7965 max_diff=255
+fail	svg1.1/filters-light-03-f.svg	pixels=18996 max_diff=255
+fail	svg1.1/filters-light-04-f.svg	pixels=11092 max_diff=255
+fail	svg1.1/filters-light-05-f.svg	pixels=44482 max_diff=255
+fail	svg1.1/filters-morph-01-f.svg	pixels=10331 max_diff=255
+fail	svg1.1/filters-offset-01-b.svg	pixels=12032 max_diff=255
+fail	svg1.1/filters-overview-01-b.svg	pixels=49903 max_diff=255
+fail	svg1.1/filters-overview-02-b.svg	pixels=53009 max_diff=255
+fail	svg1.1/filters-overview-03-b.svg	pixels=53090 max_diff=255
+fail	svg1.1/filters-turb-01-f.svg	pixels=56034 max_diff=255
+fail	svg1.1/filters-turb-02-f.svg	pixels=33043 max_diff=255
+fail	svg1.1/masking-filter-01-f.svg	pixels=24679 max_diff=255
+fail	svg1.1/painting-control-02-f.svg	pixels=4101 max_diff=255
+fail	svg1.1/painting-marker-04-f.svg	pixels=9329 max_diff=255
+fail	svg1.1/painting-marker-properties-01-f.svg	pixels=13588 max_diff=255
+fail	svg1.1/painting-stroke-09-t.svg	pixels=5126 max_diff=255
+fail	svg1.1/paths-data-04-t.svg	pixels=6240 max_diff=255
+fail	svg1.1/paths-data-05-t.svg	pixels=4792 max_diff=255
+fail	svg1.1/paths-data-06-t.svg	pixels=4576 max_diff=255
+fail	svg1.1/paths-data-07-t.svg	pixels=4182 max_diff=255
+fail	svg1.1/paths-data-08-t.svg	pixels=7655 max_diff=255
+fail	svg1.1/paths-data-09-t.svg	pixels=6291 max_diff=255
+fail	svg1.1/paths-data-14-t.svg	pixels=2971 max_diff=255
+fail	svg1.1/paths-data-18-f.svg	pixels=4125 max_diff=255
+fail	svg1.1/paths-data-20-f.svg	pixels=59395 max_diff=255
+fail	svg1.1/pservers-grad-07-b.svg	pixels=14536 max_diff=255
+fail	svg1.1/pservers-grad-08-b.svg	pixels=41931 max_diff=255
+fail	svg1.1/pservers-grad-16-b.svg	pixels=29267 max_diff=255
+fail	svg1.1/pservers-grad-18-b.svg	pixels=12867 max_diff=255
+fail	svg1.1/pservers-pattern-03-f.svg	pixels=83507 max_diff=255
+fail	svg1.1/pservers-pattern-09-f.svg	pixels=75507 max_diff=255
+fail	svg1.1/struct-group-03-t.svg	pixels=15986 max_diff=255
+fail	svg1.1/struct-use-01-t.svg	pixels=9650 max_diff=255
+fail	svg1.1/struct-use-04-b.svg	pixels=5248 max_diff=255
+fail	svg1.1/struct-use-10-f.svg	pixels=9046 max_diff=255
+fail	svg1.1/text-align-02-b.svg	pixels=21239 max_diff=255
+fail	svg1.1/text-dominant-baseline-01.svg	pixels=112492 max_diff=255
+fail	svg1.1/text-text-10-t.svg	pixels=32576 max_diff=255
+fail	svg1.1/text-tref-02-b.svg	pixels=7430 max_diff=255
+fail	svg1.1/types-basic-02-f.svg	pixels=16911 max_diff=255
+fail	svg2/mix-blend-mode.svg	pixels=158317 max_diff=255
+
+# === skip ===
+skip	avif-image-1003.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug1121-feimage-embedded-svg.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug875-svg-use-width-height.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug880-stroke-wide-line.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug885-vector-effect-non-scaling-stroke.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug92-symbol-clip.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug930-invalid-clip-path-transform.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/embedded.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs/use-symbol-cascade-992.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	color-property-color-types.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	color-types-unsupported.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	color-types.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	filter-conv-kernel-matrix-length.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	filter-conv-target.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	invalid-element-type-for-paint-server.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	invalid-gradient-transform.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	markers-arc-segments.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg1.1/rects.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/bug913-gaussian-blur-nonpositive.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/ellipse-auto-rx-ry.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/ellipse-single-auto-rx-ry.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/image-rendering-985.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/isolation.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/mask-and-opacity.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2/bug743-fe-drop-shadow.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	xinclude-data-url.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	xinclude-non-utf8.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+

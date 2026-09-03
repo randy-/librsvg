@@ -1,0 +1,297 @@
+# Living xfail list: libcroco fallback (RSVG_CSS_ENGINE=croco) vs 2.62.3
+# Default matcher is css/; this file is only for make check-parity-croco.
+#
+# Corpus: tests/fixtures/parity/  (copy of rust/rsvg/tests/fixtures/reftests)
+# Harness: tests/rsvg-test.c with RSVG_PARITY=1
+# Generated from one full run of the PNG reftest subset. Do not implement
+# features just to shrink this list in the P0 step. Do not bump
+# LIBRSVG_VERSION. Do not modify libcroco/ here.
+#
+# Format:
+#   fail<TAB>path-relative-to-fixtures/parity/<TAB>reason
+#   skip<TAB>path<TAB>reason
+#
+# Counts from the generate run:
+#   planned TAP tests: 750
+#   pass:  481   (P5: svg2/gradient-01-b.svg flipped)
+#   fail:  242   (listed below; expected gaps)
+#   skip:  27    (no -ref.png: svg-to-svg, resources, helpers)
+#
+# Failures by directory:
+#   (root): 18
+#   adwaita: 33
+#   bugs: 29
+#   svg1.1: 159
+#   svg2: 4
+#
+# Failures by reason:
+#   pixels: 243
+#
+# Passes by directory (already match 2.62.3 PNG refs under this harness):
+#   (root): 11
+#   adwaita: 455
+#   bugs: 13
+#   svg2: 1
+#
+
+# === fail (PNG mismatch or load/render error) ===
+fail	a-pseudo-class.svg	pixels=1356 max_diff=255
+fail	adwaita/alarm-symbolic.svg	pixels=111 max_diff=21
+fail	adwaita/application-x-appliance-symbolic.svg	pixels=142 max_diff=13
+fail	adwaita/audio-card-symbolic.svg	pixels=95 max_diff=17
+fail	adwaita/audio-volume-overamplified-symbolic.svg	pixels=96 max_diff=3
+fail	adwaita/bluetooth-active-symbolic.svg	pixels=63 max_diff=8
+fail	adwaita/bluetooth-symbolic.svg	pixels=63 max_diff=8
+fail	adwaita/document-properties-symbolic.svg	pixels=80 max_diff=17
+fail	adwaita/edit-cut-symbolic.svg	pixels=68 max_diff=5
+fail	adwaita/edit-select-all-symbolic.svg	pixels=82 max_diff=3
+fail	adwaita/emoji-activities-symbolic.svg	pixels=9 max_diff=2
+fail	adwaita/find-location-symbolic.svg	pixels=90 max_diff=4
+fail	adwaita/focus-top-bar-symbolic.svg	pixels=23 max_diff=16
+fail	adwaita/folder-open-symbolic.svg	pixels=35 max_diff=9
+fail	adwaita/folder-remote-symbolic.svg	pixels=39 max_diff=10
+fail	adwaita/folder-symbolic.svg	pixels=36 max_diff=9
+fail	adwaita/go-home-symbolic.svg	pixels=62 max_diff=9
+fail	adwaita/input-mouse-symbolic.svg	pixels=31 max_diff=6
+fail	adwaita/input-tablet-symbolic.svg	pixels=96 max_diff=60
+fail	adwaita/insert-link-symbolic.svg	pixels=56 max_diff=17
+fail	adwaita/network-no-route-symbolic.svg	pixels=11 max_diff=2
+fail	adwaita/network-wired-acquiring-symbolic.svg	pixels=69 max_diff=10
+fail	adwaita/network-wired-no-route-symbolic.svg	pixels=73 max_diff=8
+fail	adwaita/object-select-symbolic.svg	pixels=8 max_diff=9
+fail	adwaita/orientation-portrait-inverse-symbolic.svg	pixels=20 max_diff=17
+fail	adwaita/orientation-portrait-symbolic.svg	pixels=19 max_diff=17
+fail	adwaita/rotation-allowed-symbolic.svg	pixels=70 max_diff=13
+fail	adwaita/rotation-locked-symbolic.svg	pixels=94 max_diff=19
+fail	adwaita/system-shutdown-symbolic.svg	pixels=59 max_diff=15
+fail	adwaita/tab-new-symbolic.svg	pixels=51 max_diff=9
+fail	adwaita/user-home-symbolic.svg	pixels=62 max_diff=9
+fail	adwaita/view-mirror-symbolic.svg	pixels=110 max_diff=5
+fail	adwaita/view-restore-symbolic.svg	pixels=64 max_diff=26
+fail	adwaita/weather-windy-symbolic.svg	pixels=76 max_diff=6
+fail	bug483-attribute-selectors.svg	pixels=15000 max_diff=255
+fail	bugs/a-inside-text-content-738.svg	pixels=784 max_diff=255
+fail	bugs/a-inside-text-content-pseudo-class-738.svg	pixels=784 max_diff=255
+fail	bugs/bug108-font-size-relative.svg	pixels=464 max_diff=238
+fail	bugs/bug112-svg-delayed-attributes.svg	pixels=256 max_diff=255
+fail	bugs/bug241-light-source-type.svg	pixels=1331 max_diff=7
+fail	bugs/bug282-drop-shadow.svg	pixels=806 max_diff=30
+fail	bugs/bug340047.svg	pixels=1490 max_diff=255
+fail	bugs/bug363-missing-space.svg	pixels=5000 max_diff=255
+fail	bugs/bug476507.svg	pixels=845 max_diff=56
+fail	bugs/bug481-tspan-uses-at-least-first-x.svg	pixels=2026 max_diff=255
+fail	bugs/bug494-text-accumulate-dy.svg	pixels=3538 max_diff=255
+fail	bugs/bug587721-text-transform.svg	pixels=471 max_diff=255
+fail	bugs/bug590-mask-units.svg	pixels=55 max_diff=6
+fail	bugs/bug603550-mask-luminance.svg	pixels=2147 max_diff=254
+fail	bugs/bug642-nested-tspan-dx-dy.svg	pixels=1656 max_diff=255
+fail	bugs/bug667-tspan-visibility.svg	pixels=1092 max_diff=255
+fail	bugs/bug668-small-caps.svg	pixels=3438 max_diff=255
+fail	bugs/bug730-font-scaling.svg	pixels=10646 max_diff=255
+fail	bugs/bug760180.svg	pixels=5441 max_diff=255
+fail	filter-component-transfer-from-reference-page.svg	pixels=5212 max_diff=255
+fail	filter-effects-region.svg	pixels=3798 max_diff=255
+fail	filter-image-from-reference-page.svg	pixels=60306 max_diff=255
+fail	filter-kernel-unit-length.svg	pixels=2667 max_diff=255
+fail	font-shorthand.svg	pixels=4809 max_diff=255
+fail	include-fallback.svg	pixels=520 max_diff=255
+fail	include-text.svg	pixels=393 max_diff=255
+fail	rtl-tspan.svg	pixels=4438 max_diff=255
+fail	specificity.svg	pixels=256 max_diff=205
+fail	structural-pseudo-classes.svg	pixels=2076 max_diff=255
+fail	svg1.1/coords-trans-01-b.svg	pixels=7814 max_diff=255
+fail	svg1.1/coords-trans-02-t.svg	pixels=6589 max_diff=255
+fail	svg1.1/coords-trans-03-t.svg	pixels=5604 max_diff=255
+fail	svg1.1/coords-trans-04-t.svg	pixels=3911 max_diff=255
+fail	svg1.1/coords-trans-05-t.svg	pixels=7225 max_diff=255
+fail	svg1.1/coords-trans-06-t.svg	pixels=7958 max_diff=255
+fail	svg1.1/coords-trans-07-t.svg	pixels=5105 max_diff=255
+fail	svg1.1/coords-trans-08-t.svg	pixels=4759 max_diff=255
+fail	svg1.1/coords-trans-09-t.svg	pixels=16194 max_diff=255
+fail	svg1.1/coords-viewattr-01-b.svg	pixels=8702 max_diff=255
+fail	svg1.1/coords-viewattr-02-b.svg	pixels=9728 max_diff=255
+fail	svg1.1/coords-viewattr-03-b.svg	pixels=16241 max_diff=255
+fail	svg1.1/coords-viewattr-04-f.svg	pixels=18413 max_diff=255
+fail	svg1.1/filters-background-01-f.svg	pixels=17584 max_diff=255
+fail	svg1.1/filters-blend-01-b.svg	pixels=125472 max_diff=255
+fail	svg1.1/filters-color-01-b.svg	pixels=57608 max_diff=255
+fail	svg1.1/filters-color-02-b.svg	pixels=22046 max_diff=255
+fail	svg1.1/filters-composite-02-b.svg	pixels=35625 max_diff=255
+fail	svg1.1/filters-composite-03-f.svg	pixels=42053 max_diff=255
+fail	svg1.1/filters-composite-04-f.svg	pixels=41822 max_diff=255
+fail	svg1.1/filters-composite-05-f.svg	pixels=21091 max_diff=255
+fail	svg1.1/filters-comptran-01-b.svg	pixels=50548 max_diff=255
+fail	svg1.1/filters-conv-01-f.svg	pixels=22431 max_diff=255
+fail	svg1.1/filters-conv-02-f.svg	pixels=25103 max_diff=255
+fail	svg1.1/filters-conv-03-f.svg	pixels=15306 max_diff=255
+fail	svg1.1/filters-conv-04-f.svg	pixels=68367 max_diff=255
+fail	svg1.1/filters-conv-05-f.svg	pixels=17742 max_diff=255
+fail	svg1.1/filters-diffuse-01-f.svg	pixels=22172 max_diff=255
+fail	svg1.1/filters-displace-02-f.svg	pixels=40352 max_diff=255
+fail	svg1.1/filters-felem-02-f.svg	pixels=5290 max_diff=255
+fail	svg1.1/filters-gauss-01-b.svg	pixels=23600 max_diff=255
+fail	svg1.1/filters-gauss-02-f.svg	pixels=14371 max_diff=255
+fail	svg1.1/filters-gauss-03-f.svg	pixels=2901 max_diff=255
+fail	svg1.1/filters-image-01-b.svg	pixels=69635 max_diff=255
+fail	svg1.1/filters-image-02-b.svg	pixels=40628 max_diff=255
+fail	svg1.1/filters-image-03-f.svg	pixels=18651 max_diff=255
+fail	svg1.1/filters-image-04-f.svg	pixels=20601 max_diff=255
+fail	svg1.1/filters-image-05-f.svg	pixels=25603 max_diff=255
+fail	svg1.1/filters-light-01-f.svg	pixels=35353 max_diff=255
+fail	svg1.1/filters-light-02-f.svg	pixels=7965 max_diff=255
+fail	svg1.1/filters-light-03-f.svg	pixels=18996 max_diff=255
+fail	svg1.1/filters-light-04-f.svg	pixels=11092 max_diff=255
+fail	svg1.1/filters-light-05-f.svg	pixels=44482 max_diff=255
+fail	svg1.1/filters-morph-01-f.svg	pixels=10331 max_diff=255
+fail	svg1.1/filters-offset-01-b.svg	pixels=12032 max_diff=255
+fail	svg1.1/filters-overview-01-b.svg	pixels=49903 max_diff=255
+fail	svg1.1/filters-overview-02-b.svg	pixels=53009 max_diff=255
+fail	svg1.1/filters-overview-03-b.svg	pixels=53090 max_diff=255
+fail	svg1.1/filters-specular-01-f.svg	pixels=27378 max_diff=255
+fail	svg1.1/filters-tile-01-b.svg	pixels=4445 max_diff=255
+fail	svg1.1/filters-turb-01-f.svg	pixels=56034 max_diff=255
+fail	svg1.1/filters-turb-02-f.svg	pixels=33043 max_diff=255
+fail	svg1.1/masking-filter-01-f.svg	pixels=24679 max_diff=255
+fail	svg1.1/masking-intro-01-f.svg	pixels=7711 max_diff=255
+fail	svg1.1/masking-mask-01-b.svg	pixels=16917 max_diff=255
+fail	svg1.1/masking-mask-02-f.svg	pixels=2901 max_diff=255
+fail	svg1.1/masking-opacity-01-b.svg	pixels=29578 max_diff=255
+fail	svg1.1/masking-path-01-b.svg	pixels=12548 max_diff=255
+fail	svg1.1/masking-path-02-b.svg	pixels=12623 max_diff=255
+fail	svg1.1/masking-path-03-b.svg	pixels=17857 max_diff=255
+fail	svg1.1/masking-path-04-b.svg	pixels=16225 max_diff=255
+fail	svg1.1/masking-path-05-f.svg	pixels=5233 max_diff=255
+fail	svg1.1/masking-path-08-b.svg	pixels=4713 max_diff=255
+fail	svg1.1/painting-control-02-f.svg	pixels=4101 max_diff=255
+fail	svg1.1/painting-marker-01-f.svg	pixels=5310 max_diff=255
+fail	svg1.1/painting-marker-02-f.svg	pixels=5836 max_diff=255
+fail	svg1.1/painting-marker-03-f.svg	pixels=10596 max_diff=255
+fail	svg1.1/painting-marker-04-f.svg	pixels=9329 max_diff=255
+fail	svg1.1/painting-marker-06-f.svg	pixels=5441 max_diff=255
+fail	svg1.1/painting-marker-07-f.svg	pixels=2901 max_diff=255
+fail	svg1.1/painting-marker-properties-01-f.svg	pixels=13588 max_diff=255
+fail	svg1.1/painting-stroke-01-t.svg	pixels=11482 max_diff=255
+fail	svg1.1/painting-stroke-02-t.svg	pixels=16717 max_diff=255
+fail	svg1.1/painting-stroke-03-t.svg	pixels=16869 max_diff=255
+fail	svg1.1/painting-stroke-04-t.svg	pixels=14293 max_diff=255
+fail	svg1.1/painting-stroke-05-t.svg	pixels=4628 max_diff=255
+fail	svg1.1/painting-stroke-06-t.svg	pixels=2786 max_diff=255
+fail	svg1.1/painting-stroke-07-t.svg	pixels=2786 max_diff=255
+fail	svg1.1/painting-stroke-08-t.svg	pixels=2925 max_diff=255
+fail	svg1.1/painting-stroke-09-t.svg	pixels=5126 max_diff=255
+fail	svg1.1/paths-data-01-t.svg	pixels=6323 max_diff=255
+fail	svg1.1/paths-data-02-t.svg	pixels=6827 max_diff=255
+fail	svg1.1/paths-data-03-f.svg	pixels=6080 max_diff=255
+fail	svg1.1/paths-data-04-t.svg	pixels=6240 max_diff=255
+fail	svg1.1/paths-data-05-t.svg	pixels=4792 max_diff=255
+fail	svg1.1/paths-data-06-t.svg	pixels=4576 max_diff=255
+fail	svg1.1/paths-data-07-t.svg	pixels=4182 max_diff=255
+fail	svg1.1/paths-data-08-t.svg	pixels=7655 max_diff=255
+fail	svg1.1/paths-data-09-t.svg	pixels=6291 max_diff=255
+fail	svg1.1/paths-data-10-t.svg	pixels=13364 max_diff=255
+fail	svg1.1/paths-data-12-t.svg	pixels=2867 max_diff=255
+fail	svg1.1/paths-data-13-t.svg	pixels=2867 max_diff=255
+fail	svg1.1/paths-data-14-t.svg	pixels=2971 max_diff=255
+fail	svg1.1/paths-data-15-t.svg	pixels=2925 max_diff=255
+fail	svg1.1/paths-data-16-t.svg	pixels=4753 max_diff=255
+fail	svg1.1/paths-data-17-f.svg	pixels=2837 max_diff=255
+fail	svg1.1/paths-data-18-f.svg	pixels=4125 max_diff=255
+fail	svg1.1/paths-data-19-f.svg	pixels=2824 max_diff=255
+fail	svg1.1/paths-data-20-f.svg	pixels=45847 max_diff=255
+fail	svg1.1/pservers-grad-01-b.svg	pixels=10036 max_diff=255
+fail	svg1.1/pservers-grad-02-b.svg	pixels=10600 max_diff=255
+fail	svg1.1/pservers-grad-03-b.svg	pixels=9474 max_diff=255
+fail	svg1.1/pservers-grad-04-b.svg	pixels=9973 max_diff=255
+fail	svg1.1/pservers-grad-05-b.svg	pixels=10282 max_diff=255
+fail	svg1.1/pservers-grad-06-b.svg	pixels=13841 max_diff=255
+fail	svg1.1/pservers-grad-07-b.svg	pixels=14536 max_diff=255
+fail	svg1.1/pservers-grad-08-b.svg	pixels=41931 max_diff=255
+fail	svg1.1/pservers-grad-09-b.svg	pixels=4519 max_diff=255
+fail	svg1.1/pservers-grad-10-b.svg	pixels=7094 max_diff=255
+fail	svg1.1/pservers-grad-11-b.svg	pixels=26208 max_diff=255
+fail	svg1.1/pservers-grad-12-b.svg	pixels=15479 max_diff=255
+fail	svg1.1/pservers-grad-14-b.svg	pixels=15193 max_diff=255
+fail	svg1.1/pservers-grad-15-b.svg	pixels=2925 max_diff=255
+fail	svg1.1/pservers-grad-16-b.svg	pixels=29267 max_diff=255
+fail	svg1.1/pservers-grad-18-b.svg	pixels=12867 max_diff=255
+fail	svg1.1/pservers-grad-22-b.svg	pixels=2839 max_diff=255
+fail	svg1.1/pservers-grad-23-f.svg	pixels=3638 max_diff=255
+fail	svg1.1/pservers-grad-24-f.svg	pixels=5107 max_diff=255
+fail	svg1.1/pservers-grad-stops-01-f.svg	pixels=3638 max_diff=255
+fail	svg1.1/pservers-pattern-01-b.svg	pixels=19037 max_diff=255
+fail	svg1.1/pservers-pattern-02-f.svg	pixels=2901 max_diff=255
+fail	svg1.1/pservers-pattern-03-f.svg	pixels=83507 max_diff=255
+fail	svg1.1/pservers-pattern-04-f.svg	pixels=2901 max_diff=255
+fail	svg1.1/pservers-pattern-05-f.svg	pixels=3638 max_diff=255
+fail	svg1.1/pservers-pattern-06-f.svg	pixels=3588 max_diff=255
+fail	svg1.1/pservers-pattern-07-f.svg	pixels=3588 max_diff=255
+fail	svg1.1/pservers-pattern-08-f.svg	pixels=3588 max_diff=255
+fail	svg1.1/pservers-pattern-09-f.svg	pixels=75507 max_diff=255
+fail	svg1.1/shapes-intro-01-t.svg	pixels=4991 max_diff=255
+fail	svg1.1/shapes-intro-02-f.svg	pixels=2787 max_diff=255
+fail	svg1.1/struct-cond-01-t.svg	pixels=2867 max_diff=255
+fail	svg1.1/struct-cond-03-t.svg	pixels=2786 max_diff=255
+fail	svg1.1/struct-group-03-t.svg	pixels=15986 max_diff=255
+fail	svg1.1/struct-image-05-b.svg	pixels=3370 max_diff=255
+fail	svg1.1/struct-svg-03-f.svg	pixels=3507 max_diff=255
+fail	svg1.1/struct-symbol-01-b.svg	pixels=3714 max_diff=255
+fail	svg1.1/struct-use-01-t.svg	pixels=9650 max_diff=255
+fail	svg1.1/struct-use-03-t.svg	pixels=3826 max_diff=255
+fail	svg1.1/struct-use-04-b.svg	pixels=5248 max_diff=255
+fail	svg1.1/struct-use-09-b.svg	pixels=3604 max_diff=255
+fail	svg1.1/struct-use-10-f.svg	pixels=17146 max_diff=255
+fail	svg1.1/styling-css-01-b.svg	pixels=4080 max_diff=255
+fail	svg1.1/styling-css-02-b.svg	pixels=9564 max_diff=255
+fail	svg1.1/styling-css-03-b.svg	pixels=16751 max_diff=255
+fail	svg1.1/styling-css-04-f.svg	pixels=72588 max_diff=255
+fail	svg1.1/styling-css-07-f.svg	pixels=2901 max_diff=255
+fail	svg1.1/styling-css-08-f.svg	pixels=28987 max_diff=255
+fail	svg1.1/text-align-01-b.svg	pixels=17108 max_diff=255
+fail	svg1.1/text-align-02-b.svg	pixels=21239 max_diff=255
+fail	svg1.1/text-align-03-b.svg	pixels=17590 max_diff=255
+fail	svg1.1/text-dominant-baseline-01.svg	pixels=112492 max_diff=255
+fail	svg1.1/text-fonts-02-t.svg	pixels=13923 max_diff=255
+fail	svg1.1/text-text-03-b.svg	pixels=23938 max_diff=255
+fail	svg1.1/text-text-08-b.svg	pixels=33704 max_diff=255
+fail	svg1.1/text-text-10-t.svg	pixels=32576 max_diff=255
+fail	svg1.1/text-tref-01-b.svg	pixels=7684 max_diff=255
+fail	svg1.1/text-tref-02-b.svg	pixels=7430 max_diff=255
+fail	svg1.1/text-tref-03-b.svg	pixels=5951 max_diff=255
+fail	svg1.1/types-basic-02-f.svg	pixels=16911 max_diff=255
+fail	svg2/mix-blend-mode.svg	pixels=158317 max_diff=255
+fail	svg2/multi-filter.svg	pixels=4394 max_diff=113
+fail	svg2/text-paint-order.svg	pixels=43972 max_diff=255
+fail	system-language-de.svg	pixels=100 max_diff=156
+fail	text-objectBoundingBox.svg	pixels=19996 max_diff=255
+fail	xml-lang-css-inherit.svg	pixels=100 max_diff=255
+fail	xml-lang-css.svg	pixels=400 max_diff=255
+
+# === skip (not a PNG reftest in the C harness) ===
+skip	avif-image-1003.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug1121-feimage-embedded-svg.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug875-svg-use-width-height.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug880-stroke-wide-line.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug885-vector-effect-non-scaling-stroke.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug92-symbol-clip.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/bug930-invalid-clip-path-transform.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs-reftests/embedded.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	bugs/use-symbol-cascade-992.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	color-property-color-types.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	color-types-unsupported.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	color-types.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	filter-conv-kernel-matrix-length.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	filter-conv-target.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	invalid-element-type-for-paint-server.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	invalid-gradient-transform.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	markers-arc-segments.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg1.1/rects.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/bug913-gaussian-blur-nonpositive.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/ellipse-auto-rx-ry.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/ellipse-single-auto-rx-ry.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/image-rendering-985.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/isolation.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2-reftests/mask-and-opacity.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	svg2/bug743-fe-drop-shadow.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	xinclude-data-url.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+skip	xinclude-non-utf8.svg	no -ref.png (svg-to-svg, resource, or not a PNG reftest)
+

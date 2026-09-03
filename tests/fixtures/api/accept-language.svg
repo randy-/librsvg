@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+  <switch>
+    <rect systemLanguage="de" fill="#ff0000" width="20" height="20"/>
+    <rect systemLanguage="en" fill="#00ff00" width="20" height="20"/>
+    <rect fill="#0000ff" width="20" height="20"/>
+  </switch>
+</svg>

@@ -1,0 +1,16 @@
+libcroco is discontinued in this librsvg tree
+=============================================
+
+This directory is an **unbuilt archive**. It is not compiled, not
+linked, not optional, and not packaged. The only CSS engine is `css/`
+(`css/rsvg-css-engine.c`).
+
+Last vendored version: **0.6.15** (GNOME 0.6.13 plus in-tree CVE
+fixes: CVE-2017-8834, CVE-2017-8871, CVE-2020-12825). 0.6.13 already
+had CVE-2017-7960 and CVE-2017-7961. SONAME was `libcroco-0.6.so.3`.
+
+`RSVG_CSS_ENGINE=croco` is ignored. `--enable-croco` /
+`--disable-croco` are errors.
+
+To use this copy elsewhere, take the `libcroco/` directory. Do not
+`PKG_CHECK_MODULES` a system libcroco into librsvg.

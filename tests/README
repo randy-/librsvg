@@ -1,0 +1,21 @@
+Optional targets (not `make check`)
+===================================
+
+    make fuzz-css
+    ./tests/fuzz/rsvg-fuzz-css
+    ./tests/fuzz/rsvg-fuzz-css --seconds 3600
+
+    make fuzz-afl
+    afl-fuzz -i tests/fuzz/seeds -o tests/fuzz/out -- ./tests/fuzz/rsvg-fuzz-css-afl @@
+    # skips if AFL++ is missing; not make check; Ctrl-C to stop; crashes/hangs under out/
+
+CSS/SVG harness on the css/ path. See `tests/fuzz/README`.
+
+    make -C tests fuzz-bmp
+    ./tests/fuzz-bmp [--mutate N]
+
+Offline BMP / RLE harness.
+
+    make check-parity
+
+Rust-oracle reftests (`tests/README-parity.md`).

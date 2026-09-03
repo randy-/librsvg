@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+# Rebuild loaders.cache without this package's SVG loader.
+update_pixbuf_cache() {
+	for ql in /usr/lib/*/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders; do
+		if [ -x "$ql" ]; then
+			"$ql" --update-cache || true
+			break
+		fi
+	done
+	for d in /usr/lib/*/gdk-pixbuf-2.0/*/loaders; do
+		if [ -d "$d" ]; then
+			dpkg-trigger --no-await "$d" || true
+		fi
+	done
+}
+
+if [ "$1" = remove ] || [ "$1" = purge ]; then
+	update_pixbuf_cache
+fi
+
+#DEBHELPER#

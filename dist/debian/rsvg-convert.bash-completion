@@ -1,0 +1,56 @@
+# bash completion for rsvg-convert (GLib GOption; not clap)
+# Installed as /usr/share/bash-completion/completions/rsvg-convert
+# There is no --completion flag.
+
+_rsvg_convert()
+{
+    local cur prev words cword
+    _init_completion -n = || return
+
+    local formats='png pdf pdf1.4 pdf1.5 pdf1.6 pdf1.7 ps eps svg xml recording'
+    local opts='-d --dpi-x -p --dpi-y -x --x-zoom -y --y-zoom -z --zoom
+                -w --width -h --height --top --left --page-width --page-height
+                -f --format -o --output -i --export-id -s --stylesheet
+                -l --accept-language -a --keep-aspect-ratio -b --background-color
+                -u --unlimited --keep-image-data --no-keep-image-data
+                -v --version -? --help --help-all'
+
+    case $prev in
+        -f|--format)
+            COMPREPLY=( $(compgen -W "$formats" -- "$cur") )
+            return
+            ;;
+        -s|--stylesheet)
+            _filedir '@(css|CSS)'
+            return
+            ;;
+        -o|--output)
+            _filedir
+            return
+            ;;
+        -b|--background-color)
+            COMPREPLY=( $(compgen -W 'none black white' -- "$cur") )
+            return
+            ;;
+        -d|--dpi-x|-p|--dpi-y|-x|--x-zoom|-y|--y-zoom|-z|--zoom)
+            return
+            ;;
+        -w|--width|-h|--height|--top|--left|--page-width|--page-height)
+            return
+            ;;
+        -i|--export-id|-l|--accept-language)
+            return
+            ;;
+        -v|--version|-\?|--help|--help-all)
+            return
+            ;;
+    esac
+
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $(compgen -W "$opts" -- "$cur") )
+        return
+    fi
+
+    _filedir '@(svg|svgz|SVG|SVGZ)'
+} &&
+complete -F _rsvg_convert rsvg-convert

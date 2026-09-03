@@ -1,0 +1,67 @@
+CRUX port for this librsvg tree
+===============================
+
+One package (`librsvg/Pkgfile`) builds **librsvg** 2.62.3
+(`librsvg-2.so.2`). css/ is the only CSS engine. `libcroco/` is an
+unbuilt archive and is not packaged.
+Source code home URL: https://familybusinesssoftware.com/oss/librsvg
+
+How to build with pkgmk
+-----------------------
+
+Place the public source tarball `librsvg-c-2.62.3.tar.xz` next to
+this `Pkgfile`, or let pkgmk fetch it from the URL in `source=`.
+The top directory inside the archive must be `librsvg-c-2.62.3/`.
+Download: https://familybusinesssoftware.com/oss/librsvg/download
+
+From the directory that contains this `Pkgfile` (does **not**
+install onto the live host):
+
+    pkgmk -d
+
+pkgmk unpacks the tarball, runs `build()`, and writes
+`librsvg#2.62.3-1.pkg.tar.gz` (or the compression in pkgmk.conf)
+using `$PKG` as DESTDIR. Install that package on a CRUX system
+with `pkgadd` when you intend to. Do not run `make install`
+without DESTDIR, and do not install onto the build host from
+this port.
+
+`pkgmk -uf` updates `.footprint` after a successful first build.
+
+What the recipe does
+--------------------
+
+configure:
+
+    --prefix=/usr --disable-introspection --disable-vala
+
+PNG, JPEG, GIF, WebP, and AVIF in SVG `<image>` stay **auto**
+(enabled when the library is present). BMP is in-tree.
+
+The compile step is `make all` because a bare `make` in this tree
+can run `dist-hook` instead of building. Install is
+`make DESTDIR=$PKG install`. libcroco is not built or installed.
+
+The gdk-pixbuf SVG loader is installed under
+`$PKG.../gdk-pixbuf-2.0/.../loaders/`. The package does **not**
+ship `loaders.cache` (gdk-pixbuf owns that path). After `pkgadd`
+on a CRUX host, run:
+
+    gdk-pixbuf-query-loaders --update-cache
+
+First install is `pkgadd` without `-u`. Use `-u` only when
+upgrading.
+
+Dependencies
+------------
+
+Required: cairo, gdk-pixbuf, glib, libxml2, pango.
+
+Optional (configure auto): libpng, libjpeg, giflib, libwebp, libavif.
+
+libcroco is not a package dependency.
+
+libxml2 2.15 (CRUX) needs no Pkgfile patch: parser.h,
+xmlParserMaxDepth (#ifndef raise vs #else XML_PARSE_HUGE), and
+xml-stylesheet xmlReadMemory are in-tree. source= is only
+librsvg-c-$version.tar.xz.

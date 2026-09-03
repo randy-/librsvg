@@ -1,0 +1,14 @@
+libcroco — CSS2 parser used by this librsvg tree
+================================================
+
+**Discontinued in the librsvg build.** This directory is not compiled
+or linked. See `DISCONTINUED`. The only CSS engine is `css/`.
+
+This is the archived in-tree CSS2 tokenizer and SAC/CSSOM parser.
+The live stylesheet engine in librsvg is `css/`.
+
+Version 0.6.15 is official GNOME 0.6.13 plus the patches listed in
+NEWS. It is not stock GNOME 0.6.13. SONAME stays libcroco-0.6.so.3.
+
+`@import` URLs are not fetched and will not be. This tree does not
+ship a layout engine, mlview, or sewfox.

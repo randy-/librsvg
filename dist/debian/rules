@@ -1,0 +1,94 @@
+#!/usr/bin/make -f
+
+# Debian packaging only. Do not install onto the live host from debian/rules.
+# libcroco is discontinued; css/ is the only engine.
+
+include /usr/share/dpkg/default.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+%:
+	dh $@
+
+# Shipped configure/libtool are used. Do not run autoreconf/libtoolize
+# (gtkdocize is absent).
+override_dh_autoreconf:
+	:
+override_dh_autoreconf_clean:
+	:
+override_dh_update_autotools_config:
+	:
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		--prefix=/usr \
+		--libdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		--disable-introspection \
+		--disable-vala
+
+override_dh_auto_build:
+	dh_auto_build -- all
+
+override_dh_auto_test:
+	:
+
+# Only remove build objects (do not distclean shipped docs).
+override_dh_auto_clean:
+	if [ -f Makefile ]; then $(MAKE) clean || true; fi
+	rm -f libtool config.log config.status
+	rm -rf debian/tmp debian/.debhelper
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/librsvg-2.a \
+	      $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/librsvg-2.la
+	rm -f $(CURDIR)/debian/tmp/usr/bin/rsvg-view-3
+	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gdk-pixbuf-2.0/*/loaders.cache \
+	      $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gdk-pixbuf-2.0/*/loaders/*.a \
+	      $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gdk-pixbuf-2.0/*/loaders/*.la
+	rm -rf $(CURDIR)/debian/tmp/usr/share/gtk-doc
+	# libcroco is not packaged (css/ only). Strip leftover install paths.
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/librsvg-c
+	rm -rf $(CURDIR)/debian/tmp/usr/include/libcroco-0.6
+	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libcroco-0.6.so* \
+	      $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libcroco-0.6.pc \
+	      $(CURDIR)/debian/tmp/usr/bin/csslint-0.6 \
+	      $(CURDIR)/debian/tmp/usr/bin/croco-0.6-config
+	# Static API HTML only if present; never Doxygen inputs.
+	find $(CURDIR)/debian/tmp -name Doxyfile -delete
+	find $(CURDIR)/debian/tmp -path '*/doc/Makefile' -delete
+	find $(CURDIR)/debian/tmp -path '*/doc/Makefile.in' -delete
+	find $(CURDIR)/debian/tmp -path '*/doc/Makefile.am' -delete
+	find $(CURDIR)/debian/tmp -name doxygen-footer.html -delete
+	find $(CURDIR)/debian/tmp -name header.html -path '*/doc/*' -delete
+	# Static bash completion (not a convert --completion flag).
+	install -D -m 644 debian/rsvg-convert.bash-completion \
+	  $(CURDIR)/debian/tmp/usr/share/bash-completion/completions/rsvg-convert
+
+override_dh_shlibdeps:
+	# Unreadable /etc/ld.so.conf.d fragments are hidden via bwrap
+	# (empty files). The live host files are not modified.
+	sh -c '\
+	  args=""; \
+	  wrap=; \
+	  for f in /etc/ld.so.conf.d/*; do \
+	    if [ -e "$$f" ] && [ ! -r "$$f" ]; then wrap=1; break; fi; \
+	  done; \
+	  if [ -z "$$wrap" ]; then dh_shlibdeps -- $$args; exit $$?; fi; \
+	  command -v bwrap >/dev/null || exit 1; \
+	  empty=$$(mktemp); \
+	  cmd="bwrap --dev-bind / /"; \
+	  for f in /etc/ld.so.conf.d/*; do \
+	    if [ -e "$$f" ] && [ ! -r "$$f" ]; then \
+	      cmd="$$cmd --ro-bind $$empty $$f"; \
+	    fi; \
+	  done; \
+	  eval $$cmd dh_shlibdeps -- $$args; \
+	  st=$$?; rm -f $$empty; exit $$st \
+	'
+
+override_dh_makeshlibs:
+	dh_makeshlibs -plibrsvg-c2
+
+override_dh_missing:
+	dh_missing --fail-missing

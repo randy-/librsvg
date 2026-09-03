@@ -1,0 +1,8 @@
+tar-ignore = rust
+tar-ignore = stage
+tar-ignore = pkg
+tar-ignore = .git
+tar-ignore = autom4te.cache
+tar-ignore = AGENTS.md
+tar-ignore = AGENTS_history.md
+tar-ignore = AGENTS_deprecated-abi.md

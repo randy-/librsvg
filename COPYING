@@ -1,0 +1,12 @@
+librsvg licences
+================
+
+Library (librsvg-2.so, headers, pkg-config librsvg-2.0)
+    GNU Library General Public License, version 2 or later.
+    Full text: LICENCE-LIB
+    You may link this library from other programs; the library
+    itself stays under this license.
+
+Command-line tools (rsvg-convert and similar)
+    GNU General Public License, version 2.
+    Full text: LICENCE

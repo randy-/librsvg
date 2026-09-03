@@ -1,0 +1,11 @@
+tmp/
+librsvg-c2/
+librsvg-c-dev/
+librsvg-c-bin/
+librsvg-c-common/
+.debhelper/
+debhelper-build-stamp
+files
+*.substvars
+*.debhelper
+*.debhelper.log

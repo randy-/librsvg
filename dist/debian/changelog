@@ -1,0 +1,16 @@
+librsvg-c (2.62.3-1) unstable; urgency=medium
+
+  * Initial Debian package of the C librsvg 2.62.3 tree.
+  * Binary packages librsvg-c2, librsvg-c-common, librsvg-c-dev, and
+    librsvg-c-bin replace Debian/Devuan librsvg2-* (same SONAME
+    librsvg-2.so.2). Source name librsvg-c does not collide with
+    GNOME/Rust librsvg2 in the archive namespace.
+  * css/ is the only CSS engine; libcroco is not built or packaged.
+  * Introspection disabled; gir1.2-rsvg-2.0 is not shipped.
+  * librsvg-c-dev Depends include libxml2-dev, libgif-dev, libavif-dev,
+    libpng-dev, libjpeg-dev, and libwebp-dev so pkg-config --cflags
+    --libs librsvg-2.0 works after installing only -dev.
+  * Install local debs with one apt-get install ./… transaction
+    (see README.Debian); do not dpkg -i librsvg-c2 alone.
+
+ -- Randy Butler <oss@familybusinesssoftware.com>  Thu, 20 Aug 2026 18:05:13 -0400

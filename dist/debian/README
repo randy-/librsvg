@@ -1,0 +1,56 @@
+Debian/Devuan packaging for this librsvg tree
+=============================================
+
+Source package: **librsvg-c** (does not collide with GNOME/Rust librsvg2).
+Binaries replace librsvg2-2, librsvg2-common, librsvg2-dev, and
+librsvg2-bin. SONAME stays **librsvg-2.so.2**.
+
+css/ is the only CSS engine. `libcroco/` is an unbuilt archive and is
+not packaged.
+
+Layout
+------
+
+Files live in this directory (`dist/debian/`), not `dist/debian/debian/`.
+
+Build (does not install onto the live host)
+-------------------------------------------
+
+From the source tree root:
+
+    make deb
+    # or: ./dist/debian/build-deb.sh
+
+Outputs land **only** in `../debpkg/`.
+The script does not leave
+`.deb` / `.changes` / `.buildinfo` in the source tree or its parent,
+and it does not install onto the host.
+
+Manual alternative:
+
+    ln -sfn dist/debian debian
+    dpkg-buildpackage -b -k2F4939F1142E522362100BD39CA0BE9629EAB796
+    mv ../librsvg-c*.deb ../librsvg-c*.changes ../librsvg-c*.buildinfo \
+      ../debpkg/
+
+`-b` builds binary packages only. debian/rules installs via DESTDIR
+(`debian/tmp`, then package dirs). Do not `dpkg -i` or `make install`
+onto the build host from this tree unless you intend to displace
+librsvg2 on that machine.
+
+configure flags: `--prefix=/usr --disable-introspection --disable-vala`.
+Image decoders (png, jpeg,
+gif, webp, avif) stay auto. `--libdir` is set to the multiarch path.
+
+debian/rules uses `make clean`.
+
+Packages
+--------
+
+  librsvg-c2        shared library (css/ engine; no libcroco)
+  librsvg-c-common  gdk-pixbuf SVG loader; postinst/postrm for
+                    loaders.cache
+  librsvg-c-dev     headers and librsvg-2.0.pc
+  librsvg-c-bin     rsvg-convert
+
+Signing fingerprint: 2F4939F1142E522362100BD39CA0BE9629EAB796

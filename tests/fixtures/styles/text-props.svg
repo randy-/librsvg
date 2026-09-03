@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+  <text id="ws-normal" x="0" y="8" white-space="normal">A</text>
+  <text id="ws-pre" x="0" y="8" white-space="pre">A</text>
+  <text id="ws-nowrap" x="0" y="8" white-space="nowrap">A</text>
+  <text id="lh-normal" x="0" y="8" line-height="normal">A</text>
+  <text id="lh-num" x="0" y="8" line-height="1.2">A</text>
+  <text id="lh-pct" x="0" y="8" line-height="150%">A</text>
+  <text id="to-mixed" x="0" y="8" text-orientation="mixed">A</text>
+  <text id="to-upright" x="0" y="8" text-orientation="upright">A</text>
+  <text id="to-sideways" x="0" y="8" text-orientation="sideways">A</text>
+  <text id="gov-auto" x="0" y="8" glyph-orientation-vertical="auto">A</text>
+  <text id="gov-0" x="0" y="8" glyph-orientation-vertical="0">A</text>
+  <text id="gov-90" x="0" y="8" glyph-orientation-vertical="90deg">A</text>
+  <text id="xml-preserve" x="0" y="8" xml:space="preserve">A</text>
+</svg>

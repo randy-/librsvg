@@ -1,0 +1,112 @@
+# Thank you {#thanks}
+
+Original author: Raph Levien, who started librsvg.
+
+librsvg exists because of the people who wrote it, maintained it, and
+kept it working.  Thank you.
+
+This list is taken from `AUTHORS`.  Spellings are as they appear there.
+
+- Adam Sampson
+- Adam Tkac
+- Adrian Bunk
+- Alex Duggan
+- Alex Larsson
+- Alexander Larsson
+- Alexandre Rostovtsev
+- Alexey Pavlov
+- Anders Carlsson
+- Andre Klapper
+- Andrea Griffini
+- Angus Gratton
+- Antoine Jacoutot
+- Bastien Nocera
+- Behdad Esfahbod
+- Benjamin Otte
+- Bertram Felgenhauer
+- Bruno Girin
+- Caleb Michael Moore
+- Carl Worth
+- Carlos Garnacho
+- Christian Fredrik Kalager Schaller
+- Christian Persch
+- Christian Schaller
+- Chun-wei Fan
+- Colin Walters
+- Craig Keogh
+- Daniel Drake
+- Darin Adler
+- Didier Barvaux
+- Dodji Seketeli
+- Dom Lachowicz
+- Dominic Lachowicz
+- Edward Sheldrake
+- Emilio Pozuelo Monfort
+- Emmanuel Pacaud
+- Evan Nemerson
+- Fatih Demir
+- Federico Mena Quintero
+- Felix Riemann
+- Florian Müllner
+- Gediminas Paulauskas
+- Germán Poo-Caamaño
+- Glynn Foster
+- Gregory Leblanc
+- Hagen Schink
+- Hans Breuer
+- Hans Nieser
+- Hans de Goede
+- Hiroyuki Ikezoe
+- Isak
+- jacob berkman
+- Jan Arne Petersen
+- Jasper Lievisse Adriaanse
+- Jasper St. Pierre
+- Javier Jardón
+- Jean-Baptiste Lallement
+- John Ralls
+- Jonathan Blandford
+- Josselin Mouette
+- KUROSAWA Takeshi
+- Kjartan Maraas
+- Kouhei Sutou
+- Kurosawa Takeshi
+- liucougar
+- LRN
+- Laszlo Peter
+- Luis Menina
+- Maarten Bosmans
+- Maciej Piechotka
+- Martin von Gagern
+- Massimo
+- Matthias Clasen
+- Menner
+- Michael Meeks
+- Nicholas Beeuwsaert
+- Olav Vitters
+- Owen Taylor
+- Øyvind Kolås
+- Paolo Borelli
+- Philip Withnall
+- Ramiro Estrugo
+- Randy Butler
+- Raph Levien
+- Ray Strode
+- Richard Hughes
+- Robert Ancell
+- Robert Staudinger
+- Robin Slomkowski
+- Ron Hopper
+- Ross Burton
+- Simon Budig
+- Suzuki Toshiya
+- Sven Neumann
+- Thomas Andersen
+- Thomas Vander Stichele
+- Tom Paker
+- Tor Lillqvist
+- Vincent Penquerc'h
+- Vincent Untz
+- William Hua
+- William Lachance
+- Wouter Bolsterlee

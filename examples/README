@@ -1,0 +1,27 @@
+examples — librsvg 2.62.3 C programs
+====================================
+
+Copyright (C) 2026 Randy Butler
+Library GPL v2 or later; see LICENCE-LIB.
+
+Build one file from this directory (needs pkg-config `librsvg-2.0`;
+Cairo samples also need `cairo` / `cairo-png`):
+
+    cc -o 01-render-document 01-render-document.c \
+        $(pkg-config --cflags --libs librsvg-2.0 cairo cairo-png)
+
+    cc -o 06-pixbuf 06-pixbuf.c \
+        $(pkg-config --cflags --libs librsvg-2.0)
+
+Run from this directory so `icon.svg` is found.
+
+  01-render-document.c   load icon.svg, rsvg_handle_render_document, write PNG
+  02-render-element.c    render the #dot element only
+  03-stylesheet.c        set_stylesheet so currentColor is red
+  04-geometry.c          print intrinsic size and #dot geometry
+  05-from-memory.c       rsvg_handle_new_from_data with an SVG string
+  06-pixbuf.c            rsvg_handle_get_pixbuf_and_error, write PNG
+  deprecated/render-cairo.c
+                         rsvg_handle_render_cairo (deprecated; prefer 01)
+
+HTML catalogue: doc/html/examples.html (doxygen doc/Doxyfile or make html).

@@ -1,0 +1,56 @@
+# Staged DESTDIR installs — never commit a prefix tree
+/stage/
+/rust/
+/build-*/
+# /build/ is source (Makefile.in, win32). Ignore only generated Makefiles
+# (pattern Makefile below). /build-*/ is a leftover configure dir.
+
+# Maintainer notes — never in the tarball or a public commit
+AGENTS.md
+AGENTS_*.md
+PLAN.md
+.grok/
+
+# Autotools leftovers from out-of-tree or in-tree configures
+/config.log
+config.status
+libtool
+config.h
+stamp-h1
+Makefile
+rsvg-features.h
+rsvg-version.h
+librsvg-2.0.pc
+librsvg-2.0-uninstalled.pc
+/autom4te.cache/
+autom4te.cache/
+libcroco/autom4te.cache/
+*.la
+*.lo
+.libs/
+.deps/
+
+# Local tarball cache
+/.downloads/
+/debug/
+
+# Source packages produced for distribution (not part of the tree)
+/pkg/
+
+# Debian binaries are written to ../debpkg/ (parent of this tree).
+# Ignore stray copies that land in the source tree.
+/*.deb
+/*.changes
+/*.buildinfo
+/*.dsc
+# dpkg-buildpackage symlink at the source root (not dist/debian recipes).
+/debian
+
+# AFL++ working dir for make fuzz-afl (not make check)
+/tests/fuzz/out/
+
+*~
+grok-start
+*.o
+*.log
+*.trs

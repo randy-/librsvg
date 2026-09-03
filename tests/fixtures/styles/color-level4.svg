@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+  <rect id="hex3" x="0" y="0" width="1" height="1" fill="#0f0"/>
+  <rect id="hex4" x="0" y="0" width="1" height="1" fill="#0f08"/>
+  <rect id="hex6" x="0" y="0" width="1" height="1" fill="#00ff00"/>
+  <rect id="hex8" x="0" y="0" width="1" height="1" fill="#00ff0080"/>
+  <rect id="rgb-comma" x="0" y="0" width="1" height="1" fill="rgb(0, 255, 0)"/>
+  <rect id="rgb-space" x="0" y="0" width="1" height="1" fill="rgb(0 255 0)"/>
+  <rect id="rgb-slash" x="0" y="0" width="1" height="1" fill="rgb(0 255 0 / 0.5)"/>
+  <rect id="hsl" x="0" y="0" width="1" height="1" fill="hsl(120, 100%, 50%)"/>
+  <rect id="hsla" x="0" y="0" width="1" height="1" fill="hsla(120, 100%, 50%, 0.5)"/>
+  <rect id="hwb" x="0" y="0" width="1" height="1" fill="hwb(120 0% 0%)"/>
+  <rect id="hwba" x="0" y="0" width="1" height="1" fill="hwb(120 0% 0% / 0.5)"/>
+  <rect id="transparent" x="0" y="0" width="1" height="1" fill="transparent"/>
+  <text id="font-sh" x="0" y="8" style="font: bold 50px sans; fill: #00ff00">A</text>
+  <rect id="ch" x="0" y="0" width="1" height="1" stroke="black" stroke-width="2ch" fill="none"/>
+</svg>

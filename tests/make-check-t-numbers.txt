@@ -1,0 +1,10 @@
+# make check T-norms (2.40 / 2.52 C reftest subset).
+# class<TAB>path-relative-to-fixtures/reftests/<TAB>norm_px<TAB>norm_max_diff
+# Same band as rust-oracle check-parity. Do not TAP-xfail.
+# Frozen live numbers from tests/make-check-triage.md (72 dpi).
+TFM	bugs/340047.svg	196	251
+TFM	bugs/587721-text-transform.svg	373	255
+TFM	bugs/749415.svg	11213	255
+TFM	bugs/777834-empty-text-children.svg	4522	255
+TAA	svg1.1/masking-mask-01-b.svg	420	2
+TFM	svg1.1/masking-path-03-b.svg	862	128

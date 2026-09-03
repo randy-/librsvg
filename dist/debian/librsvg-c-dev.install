@@ -1,0 +1,3 @@
+usr/include/librsvg-2.0
+usr/lib/*/librsvg-2.so
+usr/lib/*/pkgconfig/librsvg-2.0.pc

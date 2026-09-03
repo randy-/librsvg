@@ -1,0 +1,13 @@
+css/ engine (default)
+=====================
+
+C cascade + selector matcher aligned with librsvg 2.62.3
+`rust/rsvg/src/css.rs`.
+
+- This directory is the **only** matching path.
+- `RSVG_CSS_ENGINE=croco` (or `old` / `libcroco` / `0` / `off`) is
+  ignored; libcroco is discontinued (`libcroco/DISCONTINUED`).
+- `make check-parity` uses css/. `make check-parity-croco` errors.
+- Caps: `rsvg-private.h` (`RSVG_MAX_*`). Fuzz: `tests/fuzz/README`.
+
+Sources: `rsvg-css-engine.h`, `rsvg-css-engine.c`.

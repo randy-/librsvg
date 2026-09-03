@@ -1,0 +1,45 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: librsvg
+Source: This tree (C librsvg-2.0, version 2.62.3)
+Comment: Debian source package name is librsvg-c so it does not collide
+ with GNOME/Rust librsvg2 in the archive namespace. Binary packages
+ replace librsvg2-*.
+
+Files: *
+Copyright: 2000 Eazel, Inc.
+           2005 Red Hat, Inc.
+           2026 Randy Butler
+License: LGPL-2+
+
+Files: libcroco/*
+Copyright: 2002-2003 Dodji Seketeli <dodji@seketeli.org>
+           2026 Randy Butler
+License: LGPL-2.1
+
+Files: debian/*
+Copyright: 2026 Randy Butler
+License: LGPL-2+
+
+License: LGPL-2+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public License
+ as published by the Free Software Foundation; either version 2 of
+ the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Library General Public License for more details.
+ .
+ On Debian systems, the complete text of the GNU Library General
+ Public License version 2 can be found in
+ /usr/share/common-licenses/LGPL-2.
+
+License: LGPL-2.1
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of version 2.1 of the GNU Lesser General
+ Public License as published by the Free Software Foundation.
+ .
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License version 2.1 can be found in
+ /usr/share/common-licenses/LGPL-2.1.

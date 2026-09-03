@@ -1,0 +1,13 @@
+Future: metapackage `librsvg-c`
+================================
+
+Not shipped in 2.62.3-1. A binary named `librsvg-c` with
+
+    Depends: librsvg-c2 (= ${binary:Version}),
+             librsvg-c-common (= ${binary:Version}),
+             librsvg-c-bin (= ${binary:Version})
+
+would let users `apt-get install ./librsvg-c_*.deb` and get the
+desktop atomic set. Do not add it until control, changelog, and a
+guest apt one-shot are tested together. Until then, install the
+local debs in one apt command (see `deb/INSTALL.md`).

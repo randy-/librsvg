@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+# Refresh gdk-pixbuf loaders.cache after the SVG loader is installed.
+# Never write a cache file into this package; only the live cache on
+# the installed system is updated (dpkg postinst, not the build).
+update_pixbuf_cache() {
+	for ql in /usr/lib/*/gdk-pixbuf-2.0/gdk-pixbuf-query-loaders; do
+		if [ -x "$ql" ]; then
+			"$ql" --update-cache || true
+			break
+		fi
+	done
+	for d in /usr/lib/*/gdk-pixbuf-2.0/*/loaders; do
+		if [ -d "$d" ]; then
+			dpkg-trigger --no-await "$d" || true
+		fi
+	done
+}
+
+if [ "$1" = configure ]; then
+	update_pixbuf_cache
+fi
+
+#DEBHELPER#

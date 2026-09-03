@@ -1,0 +1,201 @@
+/**
+@page examples Examples
+
+Curated samples for librsvg **2.62.3**.  Full programs live in
+`examples/` in the source tree and in the `librsvg-c-2.62.3` tarball.
+Build from that directory (needs pkg-config `librsvg-2.0`; Cairo
+samples also need `cairo` / `cairo-png`):
+
+@verbatim
+cc -o 01-render-document 01-render-document.c \
+    $(pkg-config --cflags --libs librsvg-2.0 cairo cairo-png)
+@endverbatim
+
+Run from `examples/` so `icon.svg` is found.  Prefer the modern calls
+shown here: `rsvg_handle_render_document()`,
+`rsvg_handle_set_stylesheet()`, `rsvg_handle_get_pixbuf_and_error()`.
+
+@section ex_overview Catalogue
+
+| Sample | Purpose |
+| ------ | ------- |
+| `examples/01-render-document.c` | Load a file, render the whole SVG to Cairo, write PNG |
+| `examples/02-render-element.c` | Render one element (`#dot`) |
+| `examples/03-stylesheet.c` | Inject CSS (`currentColor`) |
+| `examples/04-geometry.c` | Intrinsic size and layer geometry |
+| `examples/05-from-memory.c` | Load SVG bytes, not a file |
+| `examples/06-pixbuf.c` | Render to a GdkPixbuf |
+| `examples/deprecated/render-cairo.c` | Deprecated Cairo call (kept for old code) |
+| `rsvg-convert` | Command-line converter |
+
+Shared fixture: `examples/icon.svg` (64×64; `#bg` uses `currentColor`,
+`#dot` is the inner circle).
+
+@section ex_render_document Render a document
+
+Load `icon.svg`, fit it into a 256×256 viewport, draw with Cairo, write
+a PNG.  This is the usual application path.
+
+APIs: `rsvg_handle_new_from_file()`, `rsvg_handle_render_document()`.
+
+Source: `examples/01-render-document.c`
+
+@code{.c}
+handle = rsvg_handle_new_from_file ("icon.svg", &error);
+if (handle == NULL)
+    return 1;
+
+surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 256, 256);
+cr = cairo_create (surface);
+
+viewport.x = 0.0;
+viewport.y = 0.0;
+viewport.width = 256.0;
+viewport.height = 256.0;
+
+if (!rsvg_handle_render_document (handle, cr, &viewport, &error))
+    return 1;
+
+cairo_surface_write_to_png (surface, "01-out.png");
+@endcode
+
+@section ex_render_element Render one element
+
+Draw only the element whose `id` is `dot`.  The id string must start
+with `#`.  The viewport is the element’s box, not the whole document.
+
+APIs: `rsvg_handle_new_from_file()`, `rsvg_handle_render_element()`.
+
+Source: `examples/02-render-element.c`
+
+@code{.c}
+if (!rsvg_handle_render_element (handle, cr, "#dot", &viewport, &error))
+    return 1;
+@endcode
+
+@section ex_stylesheet Inject a stylesheet
+
+Apply a user stylesheet before rendering so `currentColor` on `#bg`
+becomes red.  The CSS length is required (not implied by `strlen` at
+the API; pass it explicitly).
+
+APIs: `rsvg_handle_set_stylesheet()`, `rsvg_handle_render_document()`.
+
+Source: `examples/03-stylesheet.c`
+
+@code{.c}
+const char *css = "* { color: #c0392b; }";
+
+if (!rsvg_handle_set_stylesheet (handle, (const guint8 *) css,
+                                 strlen (css), &error))
+    return 1;
+@endcode
+
+@section ex_geometry Intrinsic size and layer geometry
+
+Print the document’s intrinsic width/height/viewBox and pixel size,
+then the ink and logical boxes of `#dot` at a viewport.  Optionally
+writes a PNG of the whole document.
+
+APIs: `rsvg_handle_get_intrinsic_dimensions()`,
+`rsvg_handle_get_intrinsic_size_in_pixels()`,
+`rsvg_handle_get_geometry_for_layer()`.
+
+Source: `examples/04-geometry.c`
+
+@code{.c}
+rsvg_handle_get_intrinsic_dimensions (handle, &has_w, &w, &has_h, &h,
+                                      &has_vb, &vb);
+rsvg_handle_get_intrinsic_size_in_pixels (handle, &px_w, &px_h);
+
+if (!rsvg_handle_get_geometry_for_layer (handle, "#dot", &viewport,
+                                         &ink, &logical, &error))
+    return 1;
+@endcode
+
+@section ex_from_memory Load from memory
+
+Build an SVG string in process memory and load it with
+`rsvg_handle_new_from_data()`.  No `icon.svg` is required.
+
+APIs: `rsvg_handle_new_from_data()`, `rsvg_handle_render_document()`.
+
+Source: `examples/05-from-memory.c`
+
+@code{.c}
+static const char svg[] =
+    "<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'>"
+    "<rect width='64' height='64' fill='#27ae60'/>"
+    "<circle cx='32' cy='32' r='16' fill='#ecf0f1'/>"
+    "</svg>";
+
+handle = rsvg_handle_new_from_data ((const guint8 *) svg, strlen (svg),
+                                    &error);
+@endcode
+
+@section ex_pixbuf GdkPixbuf
+
+Render to a #GdkPixbuf without creating a Cairo surface.  The pixbuf
+size uses the handle DPI (default 96) and the document’s intrinsic
+dimensions.  Prefer this over the deprecated `rsvg_handle_get_pixbuf()`.
+
+APIs: `rsvg_handle_new_from_file()`, `rsvg_handle_get_pixbuf_and_error()`.
+
+Source: `examples/06-pixbuf.c`
+
+@code{.c}
+pixbuf = rsvg_handle_get_pixbuf_and_error (handle, &error);
+if (pixbuf == NULL)
+    return 1;
+
+gdk_pixbuf_save (pixbuf, "06-out.png", "png", &error, NULL);
+g_object_unref (pixbuf);
+@endcode
+
+@section ex_convert rsvg-convert
+
+Command-line tool shipped with the library.  Default DPI is 96.
+`rsvg-convert -d 90 -p 90` matches the older CLI default.
+
+Full source: `rsvg-convert.c`.  Manual: `rsvg-convert(1)`.
+
+@verbatim
+rsvg-convert icon.svg -o icon.png
+rsvg-convert -w 256 -h 256 icon.svg -o icon.png
+rsvg-convert -d 90 -p 90 in.svg -o out.png
+rsvg-convert -f pdf in.svg -o out.pdf
+@endverbatim
+
+@section ex_deprecated Deprecated Cairo render
+
+`rsvg_handle_render_cairo()` has no viewport and no #GError.  New
+code should use `rsvg_handle_render_document()` (see
+@ref ex_render_document).  This file is only a translation aid.
+
+APIs: `rsvg_handle_render_cairo()` (deprecated since 2.52).
+
+Source: `examples/deprecated/render-cairo.c`
+
+@code{.c}
+#define RSVG_DISABLE_DEPRECATION_WARNINGS
+#include <librsvg/rsvg.h>
+
+if (!rsvg_handle_render_cairo (handle, cr))
+    return 1;
+@endcode
+
+@section ex_other Other in-tree programs
+
+These are not copy-paste public API samples:
+
+- `test-display.c` — GTK widget that views an SVG.  It includes
+  private headers (`rsvg-private.h`) and is not an application
+  template.
+- `tools/rsvg-dimensions.c` — measuring helper used in development.
+- `gdk-pixbuf-loader/io-svg.c` — the gdk-pixbuf module
+  (`libpixbufloader-svg`).
+
+Public C API groups: [Loading](@ref rsvg_loading),
+[Rendering](@ref rsvg_rendering), [Geometry](@ref rsvg_geometry),
+[Stylesheet](@ref rsvg_stylesheet), [Pixbuf](@ref rsvg_pixbuf).
+*/

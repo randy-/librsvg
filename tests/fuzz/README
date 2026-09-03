@@ -1,0 +1,43 @@
+CSS/SVG fuzz harness (optional)
+================================
+
+Not part of `make check`. css/ is the only matcher. Input is capped at
+64 KiB. `file:` / http(s) loads are denied (dummy base
+`file:///nonexistent/rsvg-fuzz-css/x.svg` plus `rsvg_allow_load`).
+GError on bad input is success. Stylesheet numeric caps live in
+`rsvg-private.h` (`RSVG_MAX_*`).
+
+    make fuzz-css
+    ./tests/fuzz/rsvg-fuzz-css
+    ./tests/fuzz/rsvg-fuzz-css --seconds 3600
+    ./tests/fuzz/rsvg-fuzz-css tests/fuzz/seeds
+
+A filename argument (AFL `@@`) loads that blob once and exits 0 on
+GError. `--seconds` is only for the dumb loop.
+
+AFL++ is optional and not part of `make check`:
+
+    make fuzz-afl
+    afl-fuzz -i tests/fuzz/seeds -o tests/fuzz/out -- ./tests/fuzz/rsvg-fuzz-css-afl @@
+
+`make fuzz-afl` skips cleanly if `afl-cc` / `afl-gcc-fast` is missing.
+Ctrl-C stops `afl-fuzz`. Crashes and hangs land under `tests/fuzz/out/`.
+
+libFuzzer (clang, not the default `make fuzz-css` binary):
+
+    clang -fsanitize=fuzzer,address -I. -Itests \
+      $(pkg-config --cflags --libs librsvg-2.0 cairo) \
+      tests/fuzz/rsvg-fuzz-css.c -o /tmp/rsvg-fuzz-css
+    /tmp/rsvg-fuzz-css tests/fuzz/seeds
+
+Seeds are tiny valid SVGs and one stylesheet. Do not dump the rust
+reftest corpus here. Proven hangs go in `tests/fuzz/regress/`.
+
+Standalone cases alarm at 3s and dump `/tmp/rsvg-fuzz-css-hang.bin`
+(exit 124).
+
+Recorded pass (2026-08-21): seeds 9/9; after the stray-`}` stall fix,
+60s dumb loop tried=3400870 loaded=212481 rendered=212251, exit 0.
+No crash. Regression: `tests/fuzz/regress/stray-brace.css` and
+`/api/css_stray_close_brace_does_not_abort`. Longer AFL++ / libFuzzer
+runs are optional and not `make check`.

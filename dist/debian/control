@@ -1,0 +1,82 @@
+Source: librsvg-c
+Section: libs
+Priority: optional
+Maintainer: Randy Butler <oss@familybusinesssoftware.com>
+Build-Depends: debhelper-compat (= 13),
+               pkg-config,
+               libcairo2-dev,
+               libgdk-pixbuf-2.0-dev,
+               libglib2.0-dev,
+               libpango1.0-dev,
+               libxml2-dev,
+               libpng-dev,
+               libjpeg-dev,
+               libgif-dev,
+               libwebp-dev,
+               libavif-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+
+Package: librsvg-c2
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: librsvg2-2
+Replaces: librsvg2-2
+Provides: librsvg2-2 (= ${binary:Version})
+Description: SVG rendering library (shared library)
+ C library that renders SVG to Cairo (librsvg-2.0 API, SONAME
+ librsvg-2.so.2). Replaces Debian/Devuan librsvg2-2 (GNOME/Rust).
+ .
+ CSS uses the in-tree css/ engine. libcroco is not built or packaged.
+
+Package: librsvg-c-common
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: librsvg-c2 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Conflicts: librsvg2-common
+Replaces: librsvg2-common
+Provides: librsvg2-common (= ${binary:Version})
+Description: SVG rendering library (gdk-pixbuf loader)
+ gdk-pixbuf SVG loader (libpixbufloader-svg.so) and thumbnailer.
+ Replaces Debian/Devuan librsvg2-common.
+ .
+ Maintainer scripts refresh loaders.cache; they do not ship a
+ system-wide cache file.
+
+Package: librsvg-c-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: librsvg-c2 (= ${binary:Version}),
+         libcairo2-dev,
+         libgdk-pixbuf-2.0-dev,
+         libglib2.0-dev,
+         libpango1.0-dev,
+         libxml2-dev,
+         libgif-dev,
+         libavif-dev,
+         libpng-dev,
+         libjpeg-dev,
+         libwebp-dev,
+         ${misc:Depends}
+Conflicts: librsvg2-dev
+Replaces: librsvg2-dev
+Provides: librsvg2-dev (= ${binary:Version})
+Description: SVG rendering library (development files)
+ Headers and pkg-config for librsvg-2.0. Replaces Debian/Devuan
+ librsvg2-dev. Introspection (gir1.2-rsvg-2.0) is not shipped.
+
+Package: librsvg-c-bin
+Architecture: any
+Multi-Arch: foreign
+Section: graphics
+Depends: librsvg-c2 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Conflicts: librsvg2-bin
+Replaces: librsvg2-bin
+Provides: librsvg2-bin (= ${binary:Version})
+Description: SVG rendering library (command-line tools)
+ rsvg-convert, its man page, and bash Tab completion. Replaces
+ Debian/Devuan librsvg2-bin. There is no --completion flag.
